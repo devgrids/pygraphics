@@ -11,7 +11,7 @@ class GL4Render(Render):
     def init(self):
         super().init()
         assert glfw.init()
-        self.window = glfw.create_window(self.width, self.height, "Deep", None, None)
+        self.window = glfw.create_window(self.width, self.height, "pygraphics", None, None)
         if not self.window:
             glfw.terminate()
             return

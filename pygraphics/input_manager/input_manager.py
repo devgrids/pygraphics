@@ -11,8 +11,6 @@ class InputManager:
         self.is_mouse_pressed_flag = False
 
     def init(self):
-        for i in range(512):
-            self.key_b_event[i] = '0'
         self.is_key_pressed_flag = False
         self.is_mouse_pressed_flag = False
 
@@ -20,10 +18,10 @@ class InputManager:
         self.render = render
 
     def is_pressed(self, key):
-        return self.key_b_event[ord(key)] == '1'
+        return self.key_b_event[key] == '1'
 
     def is_pressed_down(self, key):
-        return self.key_b_event[ord(key)] == '1'
+        return self.key_b_event[key] == '1'
 
     def buffers_events(self):
         pass
