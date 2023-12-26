@@ -3,7 +3,7 @@ class InputManager:
         self.render = render
         self.key_b_event = ['0'] * 512
         self.mouse_pos = (0, 0)
-        self.mouse_old_pos = (0, 0)
+        self.mouse_previous_pos = (0, 0)
         self.scroll_offset = (0.0, 0.0)
         self.button_mouse_right_pressed_manager = False
         self.button_mouse_left_pressed_manager = False

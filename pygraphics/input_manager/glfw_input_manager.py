@@ -1,3 +1,4 @@
+from OpenGL.GL import *
 import glfw
 from pygraphics.input_manager.input_manager import InputManager
 
@@ -21,34 +22,34 @@ class GLFWInputManager(InputManager):
                 self.key_b_event[key] = '0'
                 self.is_key_pressed_flag = False
 
-        # def mouse_callback(window, xpos, ypos):
-        #     self.mouse_old_pos = self.mouse_pos
-        #     self.mouse_pos = (xpos, ypos)
+        def mouse_callback(window, xpos, ypos):
+            self.mouse_previous_pos = self.mouse_pos
+            self.mouse_pos = (xpos, ypos)
 
-        # def mouse_button_callback(window, button, action, mods):
-        #     if action == glfw.PRESS:
-        #         if button == glfw.MOUSE_BUTTON_RIGHT:
-        #             self.button_mouse_right_pressed_manager = True
-        #         elif button == glfw.MOUSE_BUTTON_LEFT:
-        #             self.button_mouse_left_pressed_manager = True
-        #     elif action == glfw.RELEASE:
-        #         if button == glfw.MOUSE_BUTTON_RIGHT:
-        #             self.button_mouse_right_pressed_manager = False
-        #         elif button == glfw.MOUSE_BUTTON_LEFT:
-        #             self.button_mouse_left_pressed_manager = False
-        #         self.is_mouse_pressed_flag = False
+        def mouse_button_callback(window, button, action, mods):
+            if action == glfw.PRESS:
+                if button == glfw.MOUSE_BUTTON_RIGHT:
+                    self.button_mouse_right_pressed_manager = True
+                elif button == glfw.MOUSE_BUTTON_LEFT:
+                    self.button_mouse_left_pressed_manager = True
+            elif action == glfw.RELEASE:
+                if button == glfw.MOUSE_BUTTON_RIGHT:
+                    self.button_mouse_right_pressed_manager = False
+                elif button == glfw.MOUSE_BUTTON_LEFT:
+                    self.button_mouse_left_pressed_manager = False
+                self.is_mouse_pressed_flag = False
 
-        # def scroll_callback(window, xoffset, yoffset):
-        #     self.scroll_offset = (xoffset, yoffset)
+        def scroll_callback(window, xoffset, yoffset):
+            self.scroll_offset = (xoffset, yoffset)
 
-        # def framebuffer_size_callback(window, width, height):
-        #     glViewport(0, 0, width, height)
+        def framebuffer_size_callback(window, width, height):
+            glViewport(0, 0, width, height)
 
         glfw.set_key_callback(self.window, key_callback)
-        # glfw.set_cursor_pos_callback(self.window, mouse_callback)
-        # glfw.set_mouse_button_callback(self.window, mouse_button_callback)
-        # glfw.set_scroll_callback(self.window, scroll_callback)
-        # glfw.set_framebuffer_size_callback(self.window, framebuffer_size_callback)
+        glfw.set_cursor_pos_callback(self.window, mouse_callback)
+        glfw.set_mouse_button_callback(self.window, mouse_button_callback)
+        glfw.set_scroll_callback(self.window, scroll_callback)
+        glfw.set_framebuffer_size_callback(self.window, framebuffer_size_callback)
 
     def is_pressed(self, key):
         return super().is_pressed(ord(key) - 32)

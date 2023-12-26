@@ -18,3 +18,15 @@ pip uninstall pygraphics
 pip install -e ./pygraphics
 
 ----------------------------------------------------------------
+
+Instalar librerias:
+
+pip install PyOpenGL PyOpenGL_accelerate
+pip install spdlog
+pip install PyGLM
+pip install glfw
+pip install torch
+pip install pandas
+pip install matplotlib
+
+----------------------------------------------------------------
