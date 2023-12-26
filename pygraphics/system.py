@@ -23,11 +23,10 @@ class System:
         System.end = True
 
     @staticmethod
-    def main_loop():
+    def main_loop(program):
         while not System.render.is_closed() and not System.end:
-            glClearColor(0.0, 1.0, 0.0, 1.0);
+            glClearColor(0.0, 0.0, 0.0, 1.0);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            if System.input_manager.is_pressed_down('e'):
-                System.exit()
+            program()
             System.input_manager.buffers_events()
         System.render.clear()
