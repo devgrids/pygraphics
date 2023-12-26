@@ -16,7 +16,7 @@ class CelsiusToFahrenheit(nn.Module):
 
 # Paso 2: Traer de vuelta la máquina que ya aprendió
 modelo_cargado = CelsiusToFahrenheit()
-modelo_cargado.load_state_dict(torch.load('mi_modelo_entrenado.pth'))
+modelo_cargado.load_state_dict(torch.load('deep/mi_modelo_entrenado.pth'))
 modelo_cargado.eval()  # La preparamos para hacer cálculos
 
 # Paso 3: Hacer cálculos nuevos con la máquina

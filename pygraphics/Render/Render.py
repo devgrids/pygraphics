@@ -6,6 +6,9 @@ class Render:
     def init(self):
         pass
 
+    def clear(self):
+        pass
+
     def is_closed(self):
         return False
 

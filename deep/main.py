@@ -1,13 +1,16 @@
 import sys
 sys.path.append('C:\\dev\\deep')
 
-from pygraphics.Type.RenderType import RenderType
-from pygraphics.FactoryEngine import FactoryEngine
-from pygraphics.System import System
-from pygraphics.Render.GL4Render import GL4Render
+from pygraphics.type.render_type import RenderType
+from pygraphics.type.input_type import InputType
+
+from pygraphics.factory_engine import FactoryEngine
+from pygraphics.system import System
 
 def main():
     FactoryEngine.set_type_graphic(RenderType.GL4)
+    FactoryEngine.set_type_input(InputType.GLFW)
+
     System.init_system()
     System.main_loop()
     return 0

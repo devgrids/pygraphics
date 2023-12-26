@@ -1,6 +1,5 @@
-from OpenGL import GL
 import glfw
-from pygraphics.Render.Render import Render
+from pygraphics.render.render import Render
 
 class GL4Render(Render):
     def __init__(self, width, height):
@@ -10,12 +9,16 @@ class GL4Render(Render):
         self.window = None
 
     def init(self):
+        super().init()
         assert glfw.init()
         self.window = glfw.create_window(self.width, self.height, "Deep", None, None)
         if not self.window:
             glfw.terminate()
             return
         glfw.make_context_current(self.window)
+
+    def clear(self):
+        glfw.terminate()
 
     def is_closed(self):
         return glfw.window_should_close(self.window)
