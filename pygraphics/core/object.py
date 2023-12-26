@@ -1,6 +1,5 @@
-# Suponiendo que Mesh3D está definido en otro lugar
-# from mesh3d import Mesh3D
 from pygraphics.core.entity import Entity
+from pygraphics.core.mesh3d import Mesh3D
 
 class Object(Entity):
     def __init__(self):

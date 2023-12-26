@@ -1,9 +1,3 @@
-from enum import Enum
-
-class RenderProgramType(Enum):
-    VERTEX = 0
-    FRAGMENT = 1
-
 class RenderProgram:
     def set_program(self, program_src, type):
         pass

@@ -1,5 +1,5 @@
 from pygraphics.material.material import Material
-from pygraphics.render_program.render_program import RenderProgramType
+from pygraphics.type.render_program import RenderProgramType
 from pygraphics.render_program.glsl_shader import GLSLShader
 
 class GLSLMaterial(Material):

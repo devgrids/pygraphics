@@ -1,6 +1,6 @@
-# Suponiendo que vertex, Material y otras dependencias están definidas
-# from vertex import vertex
-# from material import Material
+import glm
+from pygraphics.material.material import Material
+from pygraphics.data.vertex import Vertex
 
 class Mesh3D:
     mesh_id = 0
