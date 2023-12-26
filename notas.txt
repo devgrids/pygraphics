@@ -1,0 +1,20 @@
+----------------------------------------------------------------
+
+Crea un entorno virtual (si no lo has hecho): python -m venv env
+
+Activa el entorno virtual:
+
+En PowerShell: .\env\Scripts\Activate
+En la terminal de comandos: .\env\Scripts\activate.bat
+
+Ejecutar: python main.py
+Desactivar: deactivate
+
+----------------------------------------------------------------
+
+Instalar pygraphics:
+
+pip uninstall pygraphics
+pip install -e ./pygraphics
+
+----------------------------------------------------------------
