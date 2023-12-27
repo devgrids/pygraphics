@@ -28,6 +28,7 @@ pip install glfw
 pip install torch
 pip install pandas
 pip install matplotlib
-pip install stbpy
+pip install PyOpenGL PyOpenGL_accelerate Pillow
+
 
 ----------------------------------------------------------------

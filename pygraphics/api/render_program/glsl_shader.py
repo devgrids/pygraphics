@@ -10,32 +10,52 @@ from pygraphics.api.render_program.render_program import RenderProgram
 
 class GLSLShader(RenderProgram):
     def __init__(self):
-        self.program_id = glCreateProgram()
+        self.program_id = 0
         self.program_var_list = {}
         self.error_msgs = ""
         self.programs = {}
         self.shaders_code = {}
-        self.logger = ConsoleLogger('Logger', False, True, True)
+        self.logger = ConsoleLogger(f"glsl_shader.py", False, True, True)
 
     def set_program(self, program_src, type):
         self.shaders_code[type] = self.read_file(program_src)
         self.programs[type] = GLuint()
 
+    def read_file(self, file_name):
+        content = "src=?"
+        if os.path.isfile(file_name):
+            with open(file_name, 'r') as file:
+                content = file.read()
+        else:
+            self.logger.error('File not found: %s' % file_name)
+        return content
+    
     def link_programs(self):
-        self.use()
-        self.compile()
-        for key, shader_id in self.programs.items():
-            glAttachShader(self.program_id, shader_id)
-        glLinkProgram(self.program_id)
-        self.check_shader_error(self.program_id)
-        self.setup_shader_var_list()
 
-    def get_error_msg(self):
-        return self.error_msgs
+        # Creación y compilación del shader de vértices
+        vertex_shader = glCreateShader(GL_VERTEX_SHADER)
+        glShaderSource(vertex_shader, self.shaders_code[RenderProgramType.VERTEX])
+        glCompileShader(vertex_shader)
+
+        # Creación y compilación del shader de fragmentos
+        fragment_shader = glCreateShader(GL_FRAGMENT_SHADER)
+        glShaderSource(fragment_shader, self.shaders_code[RenderProgramType.FRAGMENT])
+        glCompileShader(fragment_shader)
+
+        # Creación del programa y adjuntar shaders
+        self.program_id = glCreateProgram()
+        glAttachShader(self.program_id, vertex_shader)
+        glAttachShader(self.program_id, fragment_shader)
+        glLinkProgram(self.program_id)
+
+        # Eliminar los shaders ya que están ahora en el programa
+        glDeleteShader(vertex_shader)
+        glDeleteShader(fragment_shader)
+        
 
     def use(self):
         glUseProgram(self.program_id)
-
+  
     def get_var_ui(self, name):
         return self.program_var_list[name]
 
@@ -53,58 +73,4 @@ class GLSLShader(RenderProgram):
 
     def set_matrix(self, location, matrix):
         glUniformMatrix4fv(glGetUniformLocation(self.program_id, location), 1, GL_FALSE, glm.value_ptr(matrix))
-
-    def check_shader_error(self, shader_id):
-        success = glGetShaderiv(shader_id, GL_COMPILE_STATUS)
-        if not success:
-            info_log = glGetShaderInfoLog(shader_id)
-            self.error_msgs += "\n" + info_log
-        return success
-
-    def read_file(self, file_name):
-        content = "src=?"
-        if os.path.isfile(file_name):
-            with open(file_name, 'r') as file:
-                content = file.read()
-        else:
-            self.logger.error('File not found: %s' % file_name)
-        return content
-
-    def setup_shader_var_list(self):
-        count = ctypes.c_int()
-
-        glGetProgramiv(self.program_id, GL_ACTIVE_ATTRIBUTES, ctypes.byref(count))
-        for i in range(count.value):
-            name = ctypes.create_string_buffer(100)
-            size = ctypes.c_int()
-            type = ctypes.c_int()
-            glGetActiveAttrib(self.program_id, i, 100, None, ctypes.byref(size), ctypes.byref(type), name)
-            attrib_location = glGetAttribLocation(self.program_id, name)
-            self.program_var_list[name.value.decode('utf-8')] = attrib_location
-
-        glGetProgramiv(self.program_id, GL_ACTIVE_UNIFORMS, ctypes.byref(count))
-        for i in range(count.value):
-            name = ctypes.create_string_buffer(100)
-            size = ctypes.c_int()
-            type = ctypes.c_int()
-            glGetActiveUniform(self.program_id, i, 100, None, ctypes.byref(size), ctypes.byref(type), name)
-            uniform_location = glGetUniformLocation(self.program_id, name)
-            self.program_var_list[name.value.decode('utf-8')] = uniform_location
-
-    def compile(self):
-        for key, shader_id in self.programs.items():
-            shader_type = self.get_shader_to_enum(key)
-            self.programs[key] = glCreateShader(shader_type)
-            code = self.shaders_code[key].encode('utf-8')
-            glShaderSource(self.programs[key], 1, ctypes.byref(ctypes.c_char_p(code)), None)
-            glCompileShader(self.programs[key])
-            self.check_shader_error(self.programs[key])
-
-    def get_shader_to_enum(self, type):
-        if type == RenderProgramType.VERTEX:
-            return GL_VERTEX_SHADER
-        elif type == RenderProgramType.FRAGMENT:
-            return GL_FRAGMENT_SHADER
-        else:
-            return 0
 
