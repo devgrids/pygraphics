@@ -5,7 +5,6 @@ class CoreBehaviour:
     def __init__(self):
         self.gameObject = GameObject()
         self.gameObject.add_component(Transform)
-
         self.transform = self.gameObject.get_component(Transform)
 
     def start(self):

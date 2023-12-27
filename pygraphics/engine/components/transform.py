@@ -6,7 +6,3 @@ class Transform(Component):
         self.position = (0.0, 0.0) 
         self.scale = (1.0, 1.0)    
         self.rotation = 0.0        
-
-
-transform = Transform()
-print(transform.position, transform.scale, transform.rotation)

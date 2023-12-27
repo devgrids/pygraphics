@@ -1,9 +1,9 @@
+from OpenGL.GL import *
 import glm
 import os
 import spdlog
 import unittest
 from spdlog import ConsoleLogger, FileLogger, RotatingLogger, DailyLogger, LogLevel
-from OpenGL.GL import *
 
 from pygraphics.api.type.render_program import RenderProgramType
 from pygraphics.api.render_program.render_program import RenderProgram

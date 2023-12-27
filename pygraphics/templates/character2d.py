@@ -1,12 +1,13 @@
-from pygraphics.core.core_behaviour import CoreBehaviour
-from pygraphics.components.sprite_renderer import SpriteRenderer
-from pygraphics.components.animator import Animator
+from pygraphics.engine.core.core_behaviour import CoreBehaviour
+from pygraphics.engine.components.sprite_renderer import SpriteRenderer
+# from pygraphics.engine.components.animator import Animator
 
 class Character2D(CoreBehaviour):
     def __init__(self):
-        self.__init__()
+        super().__init__()
         self.gameObject.add_component(SpriteRenderer)
-        self.gameObject.add_component(Animator)
+        # self.gameObject.add_component(Animator)
+        self.sprite_renderer = self.gameObject.get_component(SpriteRenderer)
 
     def start(self):
         pass
@@ -15,4 +16,4 @@ class Character2D(CoreBehaviour):
         pass
 
     def render(self):
-        pass
+        self.sprite_renderer.render()
