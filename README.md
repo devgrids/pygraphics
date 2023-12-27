@@ -1,6 +1,9 @@
 ----------------------------------------------------------------
 
 Crea un entorno virtual (si no lo has hecho): python -m venv env
+o python3.9 -m venv env
+
+Ver versión de Python: python --version
 
 Activa el entorno virtual:
 
@@ -21,14 +24,17 @@ pip install -e ./pygraphics
 
 Instalar librerias:
 
-pip install PyOpenGL PyOpenGL_accelerate
+pip install PyOpenGL PyOpenGL_accelerate Pillow
+pip install glfw
+pip install imgui[glfw] || pip install imgui==<version>[glfw]
 pip install spdlog
 pip install PyGLM
-pip install glfw
+pip install numpy
 pip install torch
 pip install pandas
 pip install matplotlib
-pip install PyOpenGL PyOpenGL_accelerate Pillow
 
+NOT RECOMEND: pip install git+https://github.com/swistakm/pyimgui.git
+pip install git+https://github.com/swistakm/pyimgui.git@<tag-branch-or-commit>
 
 ----------------------------------------------------------------
