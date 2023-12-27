@@ -1,5 +1,5 @@
 import glfw
-from time_manager import TimeManager 
+from pygraphics.api.time_manager.time_manager import TimeManager
 
 class GLFWTimeManager(TimeManager):
     def __init__(self):

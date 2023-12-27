@@ -1,6 +1,12 @@
 import glm
+import os
+import spdlog
+import unittest
+from spdlog import ConsoleLogger, FileLogger, RotatingLogger, DailyLogger, LogLevel
 from OpenGL.GL import *
-from pygraphics.render_program.render_program import RenderProgram, RenderProgramType
+
+from pygraphics.api.type.render_program import RenderProgramType
+from pygraphics.api.render_program.render_program import RenderProgram
 
 class GLSLShader(RenderProgram):
     def __init__(self):
@@ -9,6 +15,7 @@ class GLSLShader(RenderProgram):
         self.error_msgs = ""
         self.programs = {}
         self.shaders_code = {}
+        self.logger = ConsoleLogger('Logger', False, True, True)
 
     def set_program(self, program_src, type):
         self.shaders_code[type] = self.read_file(program_src)
@@ -55,8 +62,13 @@ class GLSLShader(RenderProgram):
         return success
 
     def read_file(self, file_name):
-        with open(file_name, 'r') as file:
-            return file.read()
+        content = "src=?"
+        if os.path.isfile(file_name):
+            with open(file_name, 'r') as file:
+                content = file.read()
+        else:
+            self.logger.error('File not found: %s' % file_name)
+        return content
 
     def setup_shader_var_list(self):
         count = ctypes.c_int()

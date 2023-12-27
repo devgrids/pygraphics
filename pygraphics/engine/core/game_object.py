@@ -1,4 +1,4 @@
-from pygraphics.core.object import Object
+from pygraphics.engine.core.object import Object
 
 class GameObject(Object):
     def __init__(self):

@@ -1,4 +1,4 @@
-from components.component import Component
+from pygraphics.engine.components.component import Component
 
 class Transform(Component):
     def __init__(self):

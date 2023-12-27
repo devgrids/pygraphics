@@ -1,5 +1,5 @@
-from pygraphics.core.game_object import GameObject
-from pygraphics.components.transform import Transform
+from pygraphics.engine.core.game_object import GameObject
+from pygraphics.engine.components.transform import Transform
 
 class CoreBehaviour:
     def __init__(self):

@@ -1,6 +1,6 @@
-from pygraphics.material.material import Material
-from pygraphics.type.render_program import RenderProgramType
-from pygraphics.render_program.glsl_shader import GLSLShader
+from pygraphics.api.material.material import Material
+from pygraphics.api.type.render_program import RenderProgramType
+from pygraphics.api.render_program.glsl_shader import GLSLShader
 
 class GLSLMaterial(Material):
     def __init__(self):

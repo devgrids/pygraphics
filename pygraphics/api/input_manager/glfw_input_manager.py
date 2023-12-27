@@ -1,6 +1,6 @@
 from OpenGL.GL import *
 import glfw
-from pygraphics.input_manager.input_manager import InputManager
+from pygraphics.api.input_manager.input_manager import InputManager
 
 class GLFWInputManager(InputManager):
     def __init__(self):

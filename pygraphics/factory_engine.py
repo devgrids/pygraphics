@@ -1,8 +1,8 @@
-from pygraphics.type.render_type import RenderType
-from pygraphics.type.input_type import InputType
+from pygraphics.api.type.render_type import RenderType
+from pygraphics.api.type.input_type import InputType
 
-from pygraphics.render.gl4_render import GL4Render
-from pygraphics.input_manager.glfw_input_manager import GLFWInputManager
+from pygraphics.api.render.gl4_render import GL4Render
+from pygraphics.api.input_manager.glfw_input_manager import GLFWInputManager
 
 class FactoryEngine:
     

@@ -1,5 +1,5 @@
 import glfw
-from pygraphics.render.render import Render
+from pygraphics.api.render.render import Render
 
 class GL4Render(Render):
     def __init__(self, width, height):
