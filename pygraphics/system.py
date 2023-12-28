@@ -7,6 +7,7 @@ class System:
 
     render = None
     input_manager = None
+    gui = None
 
     end = False
     cursor_mouse_enabled = True
@@ -15,13 +16,17 @@ class System:
     def init(code_source=None):
         System.render = FactoryEngine.get_new_render()
         System.input_manager = FactoryEngine.get_new_input_manager()
+        System.gui = FactoryEngine.get_new_gui()
         
-
         System.render.init()
-        System.input_manager.link_render(System.render)
-        System.input_manager.init()
-       
+        System.gui.init()
 
+        System.input_manager.link_render(System.render)
+        System.gui.link_render(System.render)
+
+        System.input_manager.link_gui(System.gui)
+        System.input_manager.init()
+    
         if code_source is not None:
             code_source()
 
@@ -30,24 +35,14 @@ class System:
         System.end = True
 
     @staticmethod
-    def loop(code_source):
-
-        gui = GlGlfwImgui()
-        gui.init()
-
-        gui.link_render(System.render)
-        # gui.configure_callback()
-
-        System.input_manager.link_gui(gui)
-        System.input_manager.init()
-        
+    def loop(code_source):       
         while not System.render.is_closed() and not System.end:
-            gui.begin()
+            System.gui.update()
             glClearColor(0.1, 0.1, 0.1, 1.0);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            gui.render_frame()
+            System.gui.render_frame()
             code_source()
-            gui.end()
+            System.gui.render()
             System.input_manager.buffers_events()
-        gui.clear()
+        System.gui.clear()
         System.render.clear()

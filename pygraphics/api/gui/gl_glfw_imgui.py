@@ -33,7 +33,7 @@ opened_state = True
 
 class GlGlfwImgui():
     def __init__(self):
-        self.render = None
+        self.__render = None
         self.window = None
         self.impl = None
         self.font = None
@@ -52,8 +52,8 @@ class GlGlfwImgui():
     
     def link_render(self, render):
         # super().link_render(render)
-        self.render = render
-        self.window = self.render.get_window()
+        self.__render = render
+        self.window = self.__render.get_window()
         self.impl = GlfwRenderer(self.window, True)
         self.impl.refresh_font_texture()
 
@@ -63,10 +63,10 @@ class GlGlfwImgui():
             self.impl.keyboard_callback(window, key, scancode, action, mods)
         glfw.set_key_callback(self.window, key_callback)
 
-    def begin(self):
+    def update(self):
         imgui.new_frame()
 
-    def end(self):
+    def render(self):
         imgui.render()
         self.impl.render(imgui.get_draw_data())
         self.impl.process_inputs()
