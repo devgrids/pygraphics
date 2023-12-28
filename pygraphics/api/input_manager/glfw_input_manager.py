@@ -64,7 +64,7 @@ class GLFWInputManager(InputManager):
 
     def link_render(self, render):
         super().link_render(render)
-        self.window = render.get_window()
+        self.window = self.render.get_window()
 
     def set_mouse_cursor(self, enabled):
         mode = glfw.CURSOR_NORMAL if enabled else glfw.CURSOR_DISABLED

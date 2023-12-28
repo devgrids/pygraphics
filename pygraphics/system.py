@@ -1,6 +1,8 @@
 from OpenGL.GL import *
 from pygraphics.factory_engine import FactoryEngine
 
+from pygraphics.api.gui.glfw_imgui import GLFWImGui 
+
 class System:
 
     render = None
@@ -26,9 +28,16 @@ class System:
 
     @staticmethod
     def loop(code_source):
+
+        gui = GLFWImGui()
+        gui.init()
+        gui.link_render(System.render)
+
         while not System.render.is_closed() and not System.end:
-            glClearColor(0.0, 0.0, 0.0, 1.0);
+            glClearColor(0.1, 0.1, 0.1, 1.0);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             code_source()
+            gui.render_frame()
             System.input_manager.buffers_events()
+        gui.clear()
         System.render.clear()
