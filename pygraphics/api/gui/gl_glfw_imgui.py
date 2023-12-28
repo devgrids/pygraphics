@@ -27,10 +27,11 @@ active = {
     "popup context void": False,
     "table": False,
 }
-path_to_font = None  # "path/to/font.ttf"
+path_to_font = "pygraphics/resources/fonts/norwester.otf"
+# path_to_font = None  # "path/to/font.ttf"
 opened_state = True
 
-class GLFWImGui():
+class GlGlfwImgui():
     def __init__(self):
         self.render = None
         self.window = None
@@ -53,16 +54,22 @@ class GLFWImGui():
         # super().link_render(render)
         self.render = render
         self.window = self.render.get_window()
-        self.impl = GlfwRenderer(self.window, False)
+        self.impl = GlfwRenderer(self.window, True)
         self.impl.refresh_font_texture()
 
+    def configure_callback(self):
+        def key_callback(window, key, scancode, action, mods):
+            print(key)
+            self.impl.keyboard_callback(window, key, scancode, action, mods)
+        glfw.set_key_callback(self.window, key_callback)
+
     def begin(self):
-        # Aquí iría la lógica para empezar el frame
-        pass
+        imgui.new_frame()
 
     def end(self):
-        # Lógica para finalizar el frame
-        pass
+        imgui.render()
+        self.impl.render(imgui.get_draw_data())
+        self.impl.process_inputs()
 
     def frame_commands(self):
         io = imgui.get_io()
@@ -243,16 +250,12 @@ class GLFWImGui():
 
     def render_frame(self):
 
-        self.impl.process_inputs()
-        imgui.new_frame()
-
         if self.font is not None:
             imgui.push_font(self.font)
         self.frame_commands()
         if self.font is not None:
             imgui.pop_font()
 
-        imgui.render()
-        self.impl.render(imgui.get_draw_data())
+        
 
 

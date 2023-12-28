@@ -253,6 +253,21 @@ def render_frame(impl, window, font):
 
     imgui.render()
     impl.render(imgui.get_draw_data())
+
+    # # Obteniendo el objeto IO de ImGui
+    # io = imgui.get_io()
+
+    # # Comprobando si las ventanas adicionales están habilitadas
+    # if io.config_flags & imgui.CONFIG_VIEWPORTS_ENABLE:
+    #     backup_current_context = glfw.get_current_context()
+    
+    # # Actualizando y renderizando ventanas adicionales
+    # imgui.update_platform_windows()
+    # imgui.render_platform_windows_default()
+
+    # # Restaurando el contexto original
+    # glfw.make_context_current(backup_current_context)
+
     glfw.swap_buffers(window)
 
 
@@ -271,6 +286,11 @@ def impl_glfw_init():
 
     window = glfw.create_window(int(width), int(height), window_name, None, None)
     glfw.make_context_current(window)
+
+    def key_callback(window, key, scancode, action, mods):
+        print(key)
+
+    glfw.set_key_callback(window, key_callback)
 
     if not window:
         glfw.terminate()
@@ -303,11 +323,21 @@ def create_shader_program():
 
 def main():
     imgui.create_context()
+    window = impl_glfw_init()
+    
+    impl = GlfwRenderer(window, True)
+
+    def key_callback(window, key, scancode, action, mods):
+        # Tu lógica personalizada
+        print(key)
+
+        impl.keyboard_callback(window, key, scancode, action, mods)
+
+    # Establecer el nuevo callback en GLFW
+    glfw.set_key_callback(window, key_callback)
+
     io = imgui.get_io()
     jb = io.fonts.add_font_from_file_ttf(path_to_font, 30) if path_to_font is not None else None
-
-    window = impl_glfw_init()
-    impl = GlfwRenderer(window)
     impl.refresh_font_texture()
     
     #shader = create_shader_program()

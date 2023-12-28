@@ -2,7 +2,7 @@ from pygraphics.api.type.render_type import RenderType
 from pygraphics.api.type.input_type import InputType
 
 from pygraphics.api.render.gl4_render import GL4Render
-from pygraphics.api.input_manager.glfw_input_manager import GLFWInputManager
+from pygraphics.api.input_manager.gl_glfw_input_manager import GlGlfwInputManager
 
 class FactoryEngine:
     
@@ -25,7 +25,10 @@ class FactoryEngine:
     @staticmethod
     def create_input_manager_instance():
         if FactoryEngine.selected_input_backend == InputType.GLFW:
-            return GLFWInputManager()
+            if FactoryEngine.selected_graphics_backend == RenderType.GL4:
+                return GlGlfwInputManager()
+            else:
+                return None
         else:
             return None
         
