@@ -19,5 +19,12 @@ class Character2D(CoreBehaviour):
 
     def render(self):
         self.sprite_renderer.render()
-        self.user_interface.gui.text(self.gameObject.name, "Python + IA")
-        self.user_interface.gui.set_drag_float_3f(self.gameObject.name, "position", self.transform.position)
+        self.user_interface.gui.text(self.gameObject.name, "Character2D Test")
+        self.user_interface.gui.set_drag_float_3f(self.gameObject.name, 
+                                                     "position", self.transform.position)
+        self.user_interface.gui.text(self.gameObject.name, "Button")
+        if self.user_interface.gui.button(self.gameObject.name, "Event"):
+            print("Event Secret")
+
+            
+        

@@ -19,15 +19,15 @@ class Gui(ABC):
         pass
 
     @abstractmethod
-    def begin(self, id, description="None"):
-        pass
-
-    @abstractmethod
-    def end(self):
+    def widget(self, id, code=None):
         pass
 
     @abstractmethod
     def text(self, id, text="None"):
+        pass
+
+    @abstractmethod
+    def button(self, id: str, label: str) -> bool:
         pass
 
     @abstractmethod
@@ -36,6 +36,10 @@ class Gui(ABC):
     
     @abstractmethod
     def link_render(self, render):
+        pass
+    
+    @abstractmethod   
+    def info(self):
         pass
     
     # @abstractmethod

@@ -27,8 +27,8 @@ active = {
     "popup context void": False,
     "table": False,
 }
+path_to_font = None  # "path/to/font.ttf"
 path_to_font = "pygraphics/resources/fonts/norwester.otf"
-# path_to_font = None  # "path/to/font.ttf"
 opened_state = True
 
 class GlGlfwImgui(Gui):
@@ -38,6 +38,7 @@ class GlGlfwImgui(Gui):
         self.impl = None
         self.font = None
         self.flag = False
+        self.change_swap_interval = False
 
     # def __del__(self):
     #     self.clear()
@@ -245,28 +246,87 @@ class GlGlfwImgui(Gui):
         if self.font is not None:
             imgui.push_font(self.font)
         self.frame_commands()
+        if imgui.tree_node("tree_node"):
+            imgui.text("tree_node")
+            imgui.tree_pop()
         if self.font is not None:
             imgui.pop_font()
 
-    def begin(self, id, description="None"):
+    def widget(self, id, code=None):
         self.flag = False
         with imgui.begin(id):
-            imgui.text(description)
-
-    def end(self):
-        pass
-
+            if code is not None:
+                code()
+            
     def text(self, id, text="None"):
-        self.begin(id, text)
+        def widget_text():
+            imgui.text(text)
+        self.widget(id, widget_text)
+
+    def button(self, id: str, label: str) -> bool:
+        def widget_button():
+            if imgui.button(label):
+                self.flag = True
+        self.widget(id, widget_button)
+        return self.flag
 
     def set_drag_float_3f(self, id: str, label: str, value, description: str = "") -> bool:
-        self.begin(id, description)
-        if imgui.drag_float3(label, value.x, value.y, value.z):
-           self.flag = True
-        
+        def widget_drag_float_3f():
+            changed, values = imgui.drag_float3(label, value.x, value.y, value.z, 
+                                                change_speed=0.1,
+                                                min_value=-1000.0, 
+                                                max_value=1000.0, 
+                                                format="%.3f")
+            if changed:
+                value.x = values[0]
+                value.y = values[1]
+                value.z = values[2]
+                self.flag = True
+        self.widget(id, widget_drag_float_3f)
         return self.flag
+    
+    def info(self):
+        with imgui.begin("Info"):
+
+            io = imgui.get_io()
+            imgui.begin_group()
+
+            imgui.new_line()
+            imgui.text("Application average %.3f ms/frame (%.1f FPS)" % (1000.0 / io.framerate, io.framerate))
+            if imgui.button("Swap Interval"):
+                self.change_swap_interval = not self.change_swap_interval
+                glfw.swap_interval(1 if self.change_swap_interval else 0)
+            imgui.new_line()
+
+            with imgui.begin_tab_bar("TabBar") as tab_bar:
+                if tab_bar.opened:
+                    with imgui.begin_tab_item("Display") as item1:
+                        if item1.selected:
+                            imgui.text("OpenGL V.%s" % glGetString(GL_VERSION).decode('utf-8'))
+                            imgui.text("GLSL V.%s" % glGetString(GL_SHADING_LANGUAGE_VERSION).decode('utf-8'))
+                            imgui.text("Vendor: %s" % glGetString(GL_VENDOR).decode('utf-8'))
+                            imgui.text("Gpu: %s" % glGetString(GL_RENDERER).decode('utf-8'))
+                            imgui.text("Fps: %.1f" % io.framerate)
+                            imgui.text("Average: %.2f ms/frame" % (1000.0 / io.framerate))
+                    global opened_state
+                    with imgui.begin_tab_item("Author", opened=opened_state) as item3:
+                        opened_state = item3.opened
+                        if item3.selected:
+                            imgui.text("By Yordy Leonidas Moreno Vasquez")
+                        
+            imgui.end_group()
+                        
+            
+                
+            
+
+
+            
+
     
 
         
 
 
+# import imgui
+# help(imgui.collapsing_header)

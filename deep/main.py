@@ -35,7 +35,8 @@ def main():
         if System.input_manager.is_pressed_down('f'):
             character.transform.position.x+=5
             print("Hola, Yordy Leonidas MV!")
-        #System.gui.demo()
+        System.gui.demo()
+        System.gui.info()
 
     System.loop(loop)
     return 0
