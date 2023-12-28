@@ -3,9 +3,9 @@ from pygraphics.engine.components.transform import Transform
 
 class CoreBehaviour:
     def __init__(self):
-        self.gameObject = GameObject()
-        self.gameObject.add_component(Transform)
-        self.transform = self.gameObject.get_component(Transform)
+        self.game_object = GameObject()
+        self.game_object.add_component(Transform)
+        self.transform = self.game_object.get_component(Transform)
 
     def start(self):
         pass

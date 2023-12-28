@@ -11,6 +11,11 @@ from OpenGL.GL.shaders import compileProgram, compileShader
 import imgui
 from imgui.integrations.glfw import GlfwRenderer
 
+from pygraphics.engine.components.transform import Transform
+from pygraphics.engine.components.sprite_renderer import SpriteRenderer
+# from pygraphics.engine.components.user_interface import UserInterface
+from pygraphics.engine.components.animator import Animator
+
 active = {
     "window": True,
     "child": False,
@@ -246,17 +251,32 @@ class GlGlfwImgui(Gui):
         if self.font is not None:
             imgui.push_font(self.font)
         self.frame_commands()
-        if imgui.tree_node("tree_node"):
-            imgui.text("tree_node")
-            imgui.tree_pop()
         if self.font is not None:
             imgui.pop_font()
+
+    def execute_function(self, func, *args, **kwargs):
+        func(*args, **kwargs)
 
     def widget(self, id, code=None):
         self.flag = False
         with imgui.begin(id):
             if code is not None:
                 code()
+
+    def object(self, game_object):
+        transform = game_object.get_component(Transform)
+        animator = game_object.get_component(Animator)
+        def widget_object():        
+            if transform is not None:
+                if imgui.tree_node("transform"):
+                    self.widget_drag_float_3f("position", transform.position)
+                    self.widget_drag_float_3f("rotation", transform.rotation)
+                    self.widget_drag_float_3f("scale", transform.scale)
+                    imgui.tree_pop()
+            if animator is not None:
+                print("animator ENCONTRADO")  
+
+        self.widget(game_object.name, widget_object)
             
     def text(self, id, text="None"):
         def widget_text():
@@ -270,19 +290,21 @@ class GlGlfwImgui(Gui):
         self.widget(id, widget_button)
         return self.flag
 
-    def set_drag_float_3f(self, id: str, label: str, value, description: str = "") -> bool:
-        def widget_drag_float_3f():
-            changed, values = imgui.drag_float3(label, value.x, value.y, value.z, 
+    def widget_drag_float_3f(self, label: str, value):
+        changed, values = imgui.drag_float3(label, value.x, value.y, value.z, 
                                                 change_speed=0.1,
                                                 min_value=-1000.0, 
                                                 max_value=1000.0, 
                                                 format="%.3f")
-            if changed:
-                value.x = values[0]
-                value.y = values[1]
-                value.z = values[2]
-                self.flag = True
-        self.widget(id, widget_drag_float_3f)
+        if changed:
+            value.x = values[0]
+            value.y = values[1]
+            value.z = values[2]
+            self.flag = True
+
+
+    def set_drag_float_3f(self, id: str, label: str, value) -> bool:            
+        self.widget(id, self.execute_function(self.widget_drag_float_3f, label, value))
         return self.flag
     
     def info(self):

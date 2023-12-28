@@ -24,9 +24,9 @@ def main():
     character.start()
 
     character.transform.position.x+=100
-    character.gameObject.name = "Character 1"
+    character.game_object.name = "Character 1"
     print(character.transform.position)
-    print(character.gameObject.name)
+    print(character.game_object.name)
     
     def loop():
         character.render()
@@ -35,8 +35,9 @@ def main():
         if System.input_manager.is_pressed_down('f'):
             character.transform.position.x+=5
             print("Hola, Yordy Leonidas MV!")
-        System.gui.demo()
+        # System.gui.demo()
         System.gui.info()
+        System.gui.object(character.game_object)
 
     System.loop(loop)
     return 0

@@ -6,10 +6,10 @@ from pygraphics.engine.components.user_interface import UserInterface
 class Character2D(CoreBehaviour):
     def __init__(self):
         super().__init__()
-        self.gameObject.add_component(SpriteRenderer)
-        self.gameObject.add_component(UserInterface)
-        self.sprite_renderer = self.gameObject.get_component(SpriteRenderer)
-        self.user_interface = self.gameObject.get_component(UserInterface)
+        self.game_object.add_component(SpriteRenderer)
+        self.game_object.add_component(UserInterface)
+        self.sprite_renderer = self.game_object.get_component(SpriteRenderer)
+        self.user_interface = self.game_object.get_component(UserInterface)
 
     def start(self):
         pass
@@ -19,12 +19,6 @@ class Character2D(CoreBehaviour):
 
     def render(self):
         self.sprite_renderer.render()
-        self.user_interface.gui.text(self.gameObject.name, "Character2D Test")
-        self.user_interface.gui.set_drag_float_3f(self.gameObject.name, 
-                                                     "position", self.transform.position)
-        self.user_interface.gui.text(self.gameObject.name, "Button")
-        if self.user_interface.gui.button(self.gameObject.name, "Event"):
-            print("Event Secret")
 
             
         

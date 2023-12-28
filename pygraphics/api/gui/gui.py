@@ -31,13 +31,13 @@ class Gui(ABC):
         pass
 
     @abstractmethod
-    def set_drag_float_3f(self, id: str, label: str, value, description: str = "") -> bool:
+    def set_drag_float_3f(self, id: str, label: str, value) -> bool:
         pass
     
     @abstractmethod
     def link_render(self, render):
         pass
-    
+
     @abstractmethod   
     def info(self):
         pass
