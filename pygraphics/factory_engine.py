@@ -2,10 +2,6 @@ from pygraphics.api.type.render_type import RenderType
 from pygraphics.api.type.input_type import InputType
 from pygraphics.api.type.gui_type import GuiType
 
-from pygraphics.api.render.gl4_render import GL4Render
-from pygraphics.api.input_manager.gl_glfw_input_manager import GlGlfwInputManager
-from pygraphics.api.gui.gl_glfw_imgui import GlGlfwImgui 
-
 class FactoryEngine:
     
     app_width = 1080
@@ -21,6 +17,7 @@ class FactoryEngine:
 
     @staticmethod
     def create_render_instance():
+        from pygraphics.api.render.gl4_render import GL4Render
         if FactoryEngine.selected_graphics_backend == RenderType.GL4:
             return GL4Render(FactoryEngine.app_width, FactoryEngine.app_height)
         else:
@@ -28,6 +25,7 @@ class FactoryEngine:
     
     @staticmethod
     def create_input_manager_instance():
+        from pygraphics.api.input_manager.gl_glfw_input_manager import GlGlfwInputManager
         if FactoryEngine.selected_input_backend == InputType.GLFW:
             if FactoryEngine.selected_graphics_backend == RenderType.GL1:
                 return GlGlfwInputManager()
@@ -40,6 +38,7 @@ class FactoryEngine:
         
     @staticmethod
     def create_gui_instance():
+        from pygraphics.api.gui.gl_glfw_imgui import GlGlfwImgui 
         if FactoryEngine.selected_input_backend == InputType.GLFW:
             if FactoryEngine.selected_graphics_backend == RenderType.GL1:
                 if FactoryEngine.selected_gui_backend == GuiType.IMGUI:

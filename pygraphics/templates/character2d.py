@@ -6,6 +6,7 @@ from pygraphics.engine.components.user_interface import UserInterface
 class Character2D(CoreBehaviour):
     def __init__(self):
         super().__init__()
+        self.game_object.name = self.game_object.name + " - Character2D"
         self.game_object.add_component(SpriteRenderer)
         self.game_object.add_component(UserInterface)
         self.sprite_renderer = self.game_object.get_component(SpriteRenderer)

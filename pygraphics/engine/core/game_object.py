@@ -1,8 +1,13 @@
 from pygraphics.engine.core.object import Object
 
 class GameObject(Object):
+
+    __id = 1
+
     def __init__(self):
+        self.name = "GameObject " + str(GameObject.__id)
         self.components = []
+        GameObject.__id+=1
 
     def add_component(self, component_type, *args, **kwargs):
         component = component_type(*args, **kwargs)

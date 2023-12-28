@@ -33,7 +33,7 @@ active = {
     "table": False,
 }
 path_to_font = None  # "path/to/font.ttf"
-path_to_font = "pygraphics/resources/fonts/norwester.otf"
+# path_to_font = "pygraphics/resources/fonts/norwester.otf"
 opened_state = True
 
 class GlGlfwImgui(Gui):
@@ -266,6 +266,7 @@ class GlGlfwImgui(Gui):
     def object(self, game_object):
         transform = game_object.get_component(Transform)
         animator = game_object.get_component(Animator)
+        sprite_renderer = game_object.get_component(SpriteRenderer)
         def widget_object():        
             if transform is not None:
                 if imgui.tree_node("transform"):
@@ -273,8 +274,10 @@ class GlGlfwImgui(Gui):
                     self.widget_drag_float_3f("rotation", transform.rotation)
                     self.widget_drag_float_3f("scale", transform.scale)
                     imgui.tree_pop()
-            if animator is not None:
-                print("animator ENCONTRADO")  
+            if sprite_renderer is not None:
+                if imgui.tree_node("sprite renderer"):
+                    imgui.text("path: %s" % sprite_renderer.path)
+                    imgui.tree_pop()
 
         self.widget(game_object.name, widget_object)
             
