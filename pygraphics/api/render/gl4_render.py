@@ -22,6 +22,10 @@ class GL4Render(Render):
             return
         glfw.make_context_current(self.window)
 
+    def update(self):
+        glClearColor(0.1, 0.1, 0.1, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     def clear(self):
         glfw.terminate()
 

@@ -6,6 +6,9 @@ class Render:
     def init(self):
         pass
 
+    def update(self):
+        pass
+
     def clear(self):
         pass
 

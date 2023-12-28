@@ -31,7 +31,7 @@ path_to_font = "pygraphics/resources/fonts/norwester.otf"
 # path_to_font = None  # "path/to/font.ttf"
 opened_state = True
 
-class GlGlfwImgui():
+class GlGlfwImgui(Gui):
     def __init__(self):
         self.__render = None
         self.window = None
@@ -47,22 +47,6 @@ class GlGlfwImgui():
         io = imgui.get_io()
         self.font = io.fonts.add_font_from_file_ttf(path_to_font, 30) if path_to_font is not None else None
 
-    def clear(self):
-        self.impl.shutdown()
-    
-    def link_render(self, render):
-        # super().link_render(render)
-        self.__render = render
-        self.window = self.__render.get_window()
-        self.impl = GlfwRenderer(self.window, True)
-        self.impl.refresh_font_texture()
-
-    def configure_callback(self):
-        def key_callback(window, key, scancode, action, mods):
-            print(key)
-            self.impl.keyboard_callback(window, key, scancode, action, mods)
-        glfw.set_key_callback(self.window, key_callback)
-
     def update(self):
         imgui.new_frame()
 
@@ -70,6 +54,15 @@ class GlGlfwImgui():
         imgui.render()
         self.impl.render(imgui.get_draw_data())
         self.impl.process_inputs()
+
+    def clear(self):
+        self.impl.shutdown()
+    
+    def link_render(self, render):
+        self.__render = render
+        self.window = self.__render.get_window()
+        self.impl = GlfwRenderer(self.window, True)
+        self.impl.refresh_font_texture()
 
     def frame_commands(self):
         io = imgui.get_io()
@@ -248,13 +241,31 @@ class GlGlfwImgui():
                         imgui.table_next_column()
                         imgui.text("333") 
 
-    def render_frame(self):
-
+    def demo(self):
         if self.font is not None:
             imgui.push_font(self.font)
         self.frame_commands()
         if self.font is not None:
             imgui.pop_font()
+
+    def begin(self, id, description="None"):
+        self.flag = False
+        with imgui.begin(id):
+            imgui.text(description)
+
+    def end(self):
+        pass
+
+    def text(self, id, text="None"):
+        self.begin(id, text)
+
+    def set_drag_float_3f(self, id: str, label: str, value, description: str = "") -> bool:
+        self.begin(id, description)
+        if imgui.drag_float3(label, value.x, value.y, value.z):
+           self.flag = True
+        
+        return self.flag
+    
 
         
 

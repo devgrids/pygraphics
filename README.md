@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
 
 Crea un entorno virtual (si no lo has hecho): python -m venv env
-o python3.9 -m venv env
+o python3.11 -m venv env
 
 Ver versión de Python: python --version
 
@@ -27,7 +27,7 @@ Instalar librerias:
 pip install PyOpenGL PyOpenGL_accelerate Pillow
 pip install glfw
 pip install imgui[glfw] || pip install imgui==<version>[glfw]
-pip install imgui==1.4.1
+pip install imgui
 pip install spdlog
 pip install PyGLM
 pip install numpy

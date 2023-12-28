@@ -11,28 +11,31 @@ from pygraphics.system import System
 from pygraphics.templates.character2d import Character2D
 
 def test():
-     print("Testing")
+    print("Testing")
 
 def main():
     FactoryEngine.set_type_graphic(RenderType.GL4)
     FactoryEngine.set_type_input(InputType.GLFW)
     FactoryEngine.set_type_gui(GuiType.IMGUI)
-
-    # System.init()
-    System.init(test)
+    
+    System.init()
 
     character = Character2D()
     character.start()
 
     character.transform.position.x+=100
+    character.gameObject.name = "Character 1"
     print(character.transform.position)
-
+    print(character.gameObject.name)
+    
     def loop():
         character.render()
         if System.input_manager.is_pressed_down('e'):
             System.exit()
         if System.input_manager.is_pressed_down('f'):
+            character.transform.position.x+=5
             print("Hola, Yordy Leonidas MV!")
+        #System.gui.demo()
 
     System.loop(loop)
     return 0
