@@ -21,6 +21,9 @@ class GL4Render(Render):
             glfw.terminate()
             return
         glfw.make_context_current(self.window)
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+
 
     def update(self):
         glClearColor(0.1, 0.1, 0.1, 1.0);

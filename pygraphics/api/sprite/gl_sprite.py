@@ -14,7 +14,7 @@ class GLSprite(Sprite):
         self.program.link_programs()
         self.program.use()
 
-        self.texture  = load_texture('deep/resources/sprites/goku/base/icon.png')
+        self.texture  = load_texture('deep/resources/sprites/goku/ui/transform/0.png')
         glBindTexture(GL_TEXTURE_2D, self.texture)
 
     def init(self):
@@ -47,6 +47,30 @@ class GLSprite(Sprite):
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 16, ctypes.c_void_p(0))
         glEnableVertexAttribArray(1)
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 16, ctypes.c_void_p(8))
+
+    def update(self, position, size, rotate, flip):
+        import glm
+        projection = glm.ortho(-10.0, 10.0, -10.0, 10.0, -1.0, 1.0)
+        self.program.set_matrix("u_projection", projection)
+
+        # Trasladar el modelo
+        model = glm.mat4(1.0)
+        model = glm.translate(model, glm.vec3(position.x, position.y, 0.0))
+        # Trasladar para rotar alrededor del centro del cuadrado
+        # model = glm.translate(model, glm.vec3(0.5 * size.x, 0.5 * size.y, 0.0))
+
+        # Rotar el modelo
+        model = glm.rotate(model, glm.radians(rotate), glm.vec3(0.0, 0.0, 1.0))
+
+        # Rotación adicional para voltear
+        model = glm.rotate(model, glm.radians(180.0 * flip), glm.vec3(0.0, 1.0, 0.0))
+
+        # Trasladar de vuelta después de la rotación
+        # model = glm.translate(model, glm.vec3(-0.5 * size.x, -0.5 * size.y, 0.0))
+
+        # Escalar el modelo
+        model = glm.scale(model, glm.vec3(size.x, size.y, 1.0))
+        self.program.set_matrix("u_model", model)
 
     def render(self):
         glBindTexture(GL_TEXTURE_2D, self.texture)

@@ -26,7 +26,7 @@ Instalar librerias:
 
 pip install PyOpenGL PyOpenGL_accelerate Pillow
 pip install glfw
-pip install imgui[glfw] || pip install imgui==<version>[glfw]
+#pip install imgui[glfw] || pip install imgui==<version>[glfw]
 pip install imgui
 pip install spdlog
 pip install PyGLM
