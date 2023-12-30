@@ -72,8 +72,6 @@ class GlGlfwImgui(Gui):
 
     def frame_commands(self):
         io = imgui.get_io()
-        #io.config_flags |= imgui.CONFIG_DOCKING_ENABLE
-        #io.config_flags |= imgui.CONFIG_VIEWPORTS_ENABLE
 
         if io.key_ctrl and io.keys_down[glfw.KEY_Q]:
             sys.exit(0)
@@ -321,16 +319,13 @@ class GlGlfwImgui(Gui):
             imgui.begin_group()
 
             imgui.new_line()
-            imgui.text("Application average %.3f ms/frame (%.1f FPS)" % (1000.0 / io.framerate, io.framerate))
-            if imgui.button("Swap Interval"):
-                self.change_swap_interval = not self.change_swap_interval
-                glfw.swap_interval(1 if self.change_swap_interval else 0)
+            imgui.text("https://github.com/devgrids/deep")
             imgui.new_line()
 
             with imgui.begin_tab_bar("TabBar") as tab_bar:
                 if tab_bar.opened:
-                    with imgui.begin_tab_item("Display") as item1:
-                        if item1.selected:
+                    with imgui.begin_tab_item("Display") as display:
+                        if display.selected:
                             imgui.text("OpenGL V.%s" % glGetString(GL_VERSION).decode('utf-8'))
                             imgui.text("GLSL V.%s" % glGetString(GL_SHADING_LANGUAGE_VERSION).decode('utf-8'))
                             imgui.text("Vendor: %s" % glGetString(GL_VENDOR).decode('utf-8'))
@@ -338,11 +333,50 @@ class GlGlfwImgui(Gui):
                             imgui.text("Fps: %.1f" % io.framerate)
                             imgui.text("Average: %.2f ms/frame" % (1000.0 / io.framerate))
                     global opened_state
-                    with imgui.begin_tab_item("Author", opened=opened_state) as item3:
-                        opened_state = item3.opened
-                        if item3.selected:
+                    with imgui.begin_tab_item("Author", opened=opened_state) as author:
+                        opened_state = author.opened
+                        if author.selected:
                             imgui.text("By Yordy Leonidas Moreno Vasquez")
                         
+            imgui.end_group()
+
+    def tweak(self):
+
+        from pygraphics.system import System
+
+        with imgui.begin("Tweak"):
+
+            io = imgui.get_io()
+            imgui.begin_group()
+
+            imgui.new_line()
+            imgui.text("Application average %.3f ms/frame (%.1f FPS)" % (1000.0 / io.framerate, io.framerate))
+            if imgui.button("Swap V-Sync"):
+                self.change_swap_interval = not self.change_swap_interval
+                glfw.swap_interval(1 if self.change_swap_interval else 0)
+            imgui.new_line()
+
+            with imgui.begin_tab_bar("TabBar") as tab_bar:
+                if tab_bar.opened:
+                    with imgui.begin_tab_item("Render") as render:
+                        if render.selected:
+                            if imgui.tree_node("Render"):
+                                
+                                imgui.tree_pop()
+
+                    with imgui.begin_tab_item("Scene") as scene:
+                        if scene.selected:
+                            if imgui.tree_node("Camera"):
+                                camera = System.camera
+                                imgui.text("matrix %.3f " % camera.get_projection_matrix()[0][0])
+                                imgui.tree_pop()
+
+                    with imgui.begin_tab_item("Settings") as settings:
+                        if settings.selected:
+                            if imgui.tree_node("Settings"):
+                                
+                                imgui.tree_pop()
+
             imgui.end_group()
                         
             

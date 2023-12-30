@@ -1,13 +1,7 @@
 from pygraphics.engine.core.object import Object
+from pygraphics.helpers.class_type import ClassType
 
-class Component(Object):
+class Component(Object, ClassType):
     def __init__(self):
-        super().__init__() 
-        self.type = id(Component)
-
-    def is_class_type(self, class_type):
-        return class_type == self.type
-
-
-# component = Component()
-# print(component.is_class_type(id(Component)))
+        Object.__init__(self) 
+        ClassType.set_class(self, Component)

@@ -1,9 +1,7 @@
 from OpenGL.GL import *
 import glm
 import os
-import spdlog
-import unittest
-from spdlog import ConsoleLogger, FileLogger, RotatingLogger, DailyLogger, LogLevel
+from spdlog import ConsoleLogger
 
 from pygraphics.api.type.render_program import RenderProgramType
 from pygraphics.api.render_program.render_program import RenderProgram
@@ -30,13 +28,24 @@ class GLSLShader(RenderProgram):
             self.logger.error('File not found: %s' % file_name)
         return content
     
+    def link_programs(self):
+        self.use()
+        self.compile()
+        self.program_id = glCreateProgram()
+             
+        for shader_type, shader_id in self.programs.items():
+            glAttachShader(self.program_id, shader_id)
+            glDeleteShader(self.programs[shader_type])
+
+        glLinkProgram(self.program_id)
+    
     def get_shader_to_enum(self, type):
         if type == RenderProgramType.VERTEX:
             type_shader = GL_VERTEX_SHADER
         elif type == RenderProgramType.FRAGMENT:
             type_shader = GL_FRAGMENT_SHADER
         else:
-            type_shader = None  # o algún valor por defecto
+            type_shader = None 
         return type_shader
     
     def compile(self):
@@ -47,22 +56,6 @@ class GLSLShader(RenderProgram):
             glShaderSource(self.programs[shader_type], code)
             glCompileShader(self.programs[shader_type])
             # check_shader_error(self.programs[shader_type])
-
-   
-    def link_programs(self):
-        self.use()
-        self.compile()
-
-        self.program_id = glCreateProgram()
-             
-        for shader_id in self.programs.values():
-            glAttachShader(self.program_id, shader_id)
-
-        glDeleteShader(self.programs[RenderProgramType.VERTEX])
-        glDeleteShader(self.programs[RenderProgramType.FRAGMENT])  
-
-        glLinkProgram(self.program_id)
-
 
     def use(self):
         glUseProgram(self.program_id)

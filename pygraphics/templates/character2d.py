@@ -20,7 +20,7 @@ class Character2D(CoreBehaviour):
         pass
 
     def render(self):
-        self.sprite_renderer.sprite.update(self.transform.position, self.transform.scale, self.transform.rotation.z, 1)
+        self.sprite_renderer.sprite.update(self.transform.position, self.transform.scale, self.transform.rotation.z)
         self.sprite_renderer.render()
 
             

@@ -1,11 +1,14 @@
 from OpenGL.GL import *
 from pygraphics.factory_engine import FactoryEngine
+from pygraphics.api.camera.orthographic_camera import OrthographicCamera
+from pygraphics.api.camera.camera import Camera
 
 class System:
 
     render = None
     input_manager = None
     gui = None
+    camera = None
 
     end = False
     cursor_mouse_enabled = True
@@ -15,6 +18,10 @@ class System:
         System.render = FactoryEngine.get_new_render()
         System.input_manager = FactoryEngine.get_new_input_manager()
         System.gui = FactoryEngine.get_new_gui()
+        
+        System.camera = OrthographicCamera()
+
+        print(System.camera.is_class(OrthographicCamera))
         
         System.render.init()
         System.gui.init()

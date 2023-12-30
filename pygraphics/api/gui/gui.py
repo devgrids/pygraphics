@@ -41,6 +41,10 @@ class Gui(ABC):
     @abstractmethod   
     def info(self):
         pass
+
+    @abstractmethod   
+    def tweak(self):
+        pass
     
     # @abstractmethod
     # def step(self, time_step: float):

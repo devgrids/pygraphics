@@ -28,10 +28,11 @@ def main():
         if System.input_manager.is_pressed_down('e'):
             System.exit()
         if System.input_manager.is_pressed_down('f'):
-            character.transform.position.x+=5
+            character.transform.position.x+=1
             print("Hola, Yordy Leonidas MV!")
-        # System.gui.demo()
+        System.gui.demo()
         System.gui.info()
+        System.gui.tweak()
         System.gui.object(character.game_object)
 
     System.loop(loop)
