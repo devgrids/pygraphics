@@ -44,6 +44,7 @@ class GlGlfwImgui(Gui):
         self.font = None
         self.flag = False
         self.change_swap_interval = False
+        self.colors = [1.0, 0.0, 0.0]
 
     # def __del__(self):
     #     self.clear()
@@ -343,6 +344,10 @@ class GlGlfwImgui(Gui):
     def tweak(self):
 
         from pygraphics.system import System
+        from pygraphics.api.camera.orthographic_camera import OrthographicCamera
+        from pygraphics.api.camera.camera import Camera     
+
+        # from pygraphics.api.camera import orthographic_camera, camera
 
         with imgui.begin("Tweak"):
 
@@ -367,8 +372,12 @@ class GlGlfwImgui(Gui):
                     with imgui.begin_tab_item("Scene") as scene:
                         if scene.selected:
                             if imgui.tree_node("Camera"):
-                                camera = System.camera
-                                imgui.text("matrix %.3f " % camera.get_projection_matrix()[0][0])
+                                camera = System.camera                                
+                                if camera.is_class(OrthographicCamera):
+                                    imgui.text("matrix %.3f " % camera.get_projection_matrix()[0][0])
+                                    changed, color = imgui.color_edit3("color", *self.colors)
+                                    if changed:
+                                        self.colors = color
                                 imgui.tree_pop()
 
                     with imgui.begin_tab_item("Settings") as settings:
