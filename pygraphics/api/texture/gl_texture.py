@@ -1,28 +1,27 @@
-import OpenGL.GL as gl
-from PIL import Image
+from pygraphics.api.texture.texture import Texture
 
-def load_texture(path):
-    # Cargar la imagen con Pillow
-    img = Image.open(path)
-    img = img.transpose(Image.FLIP_TOP_BOTTOM)  # Flip the image vertically
-    img_data = img.convert("RGBA").tobytes()
+class GLTexture(Texture):
+    def __init__(self):
+        self.id = None
 
-    # Crear una textura en OpenGL
-    texture = gl.glGenTextures(1)
-    gl.glBindTexture(gl.GL_TEXTURE_2D, texture)
+    def load(self, path):
+        import OpenGL.GL as gl
+        from PIL import Image
+        img = Image.open(path)
+        img = img.transpose(Image.FLIP_TOP_BOTTOM)  # Flip the image vertically
+        img_data = img.convert("RGBA").tobytes()
 
-    # Configurar parámetros de la textura
-    gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_S, gl.GL_REPEAT)
-    gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_T, gl.GL_REPEAT)
-    gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR)
-    gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
+        self.id = gl.glGenTextures(1)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, self.id)
 
-    # Cargar la imagen en la textura
-    gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGBA, img.size[0], img.size[1], 0, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, img_data)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_S, gl.GL_REPEAT)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_T, gl.GL_REPEAT)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR)
+        gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
 
-    # Generar mipmaps
-    gl.glGenerateMipmap(gl.GL_TEXTURE_2D)
+        gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGBA, img.size[0], img.size[1], 0, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, img_data)
+        gl.glGenerateMipmap(gl.GL_TEXTURE_2D)
 
-    return texture
-
-
+    def get_id(self):
+        return self.id
+        

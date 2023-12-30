@@ -30,28 +30,39 @@ class GLSLShader(RenderProgram):
             self.logger.error('File not found: %s' % file_name)
         return content
     
+    def get_shader_to_enum(self, type):
+        if type == RenderProgramType.VERTEX:
+            type_shader = GL_VERTEX_SHADER
+        elif type == RenderProgramType.FRAGMENT:
+            type_shader = GL_FRAGMENT_SHADER
+        else:
+            type_shader = None  # o algún valor por defecto
+        return type_shader
+    
+    def compile(self):
+        for shader_type, shader_id in self.programs.items():
+            type_enum = self.get_shader_to_enum(shader_type)
+            self.programs[shader_type] = glCreateShader(type_enum)
+            code = self.shaders_code[shader_type]
+            glShaderSource(self.programs[shader_type], code)
+            glCompileShader(self.programs[shader_type])
+            # check_shader_error(self.programs[shader_type])
+
+   
     def link_programs(self):
+        self.use()
+        self.compile()
 
-        # Creación y compilación del shader de vértices
-        vertex_shader = glCreateShader(GL_VERTEX_SHADER)
-        glShaderSource(vertex_shader, self.shaders_code[RenderProgramType.VERTEX])
-        glCompileShader(vertex_shader)
-
-        # Creación y compilación del shader de fragmentos
-        fragment_shader = glCreateShader(GL_FRAGMENT_SHADER)
-        glShaderSource(fragment_shader, self.shaders_code[RenderProgramType.FRAGMENT])
-        glCompileShader(fragment_shader)
-
-        # Creación del programa y adjuntar shaders
         self.program_id = glCreateProgram()
-        glAttachShader(self.program_id, vertex_shader)
-        glAttachShader(self.program_id, fragment_shader)
+             
+        for shader_id in self.programs.values():
+            glAttachShader(self.program_id, shader_id)
+
+        glDeleteShader(self.programs[RenderProgramType.VERTEX])
+        glDeleteShader(self.programs[RenderProgramType.FRAGMENT])  
+
         glLinkProgram(self.program_id)
 
-        # Eliminar los shaders ya que están ahora en el programa
-        glDeleteShader(vertex_shader)
-        glDeleteShader(fragment_shader)
-        
 
     def use(self):
         glUseProgram(self.program_id)
