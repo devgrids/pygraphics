@@ -10,10 +10,6 @@ from pygraphics.system import System
 
 from pygraphics.engine.components.animator import Animator
 
-
-def test():
-    print("Testing")
-
 def main():
     GraphicsApi.set_type_graphic(RenderType.GL4)
     GraphicsApi.set_type_input(InputType.GLFW)
@@ -22,11 +18,9 @@ def main():
     System.init()
 
     character = System.new_character2d()
-    # character.start()
 
     character1 = System.new_character2d()
     character1.game_object.remove_component(Animator)
-    # character1.start()
     
     def loop():
         if System.input_manager.is_pressed_down('e'):

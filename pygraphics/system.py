@@ -23,6 +23,8 @@ class System:
         System.gui = GraphicsApi.get_new_gui()
         
         System.camera = OrthographicCamera()
+        import glm
+        System.camera.set_projection_matrix(glm.ortho(-10.0, 10.0, -10.0, 10.0, -1.0, 1.0))
         
         System.render.init()
         System.gui.init()
@@ -34,6 +36,9 @@ class System:
         System.input_manager.init()
 
         GraphicsResource.init()
+        program = GraphicsResource.programs["sprite2d"]
+        program.use()
+        program.set_matrix("u_projection", System.camera.get_projection_matrix())
 
     @staticmethod
     def exit():
@@ -53,10 +58,10 @@ class System:
         while not System.render.is_closed() and not System.end:
             System.render.update()
             System.gui.update()
-            code_source()
             for object in System.objects:
-                object.update()
+                object.update(System.camera)
                 object.render()
+            code_source()
             System.gui.render()
             System.input_manager.buffers_events()
 

@@ -4,7 +4,7 @@ from pygraphics.graphics_api import GraphicsApi
 class UserInterface(Component):
     def __init__(self):
         super().__init__()
-        self.gui = GraphicsApi.get_gui()
+        self.to = GraphicsApi.get_gui()
 
     def render(self):
         pass

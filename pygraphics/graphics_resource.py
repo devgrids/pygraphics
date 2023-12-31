@@ -3,7 +3,7 @@ from pygraphics.api.type.input_type import InputType
 
 class GraphicsResource:
 
-    resources = {}
+    programs = {}
 
     @staticmethod
     def init():
@@ -13,12 +13,12 @@ class GraphicsResource:
         render_program.set_program("pygraphics/resources/shaders/model.vert", RenderProgramType.VERTEX)
         render_program.set_program("pygraphics/resources/shaders/model.frag", RenderProgramType.FRAGMENT)
         render_program.link_programs()
-        GraphicsResource.resources['program_sprite2d'] = render_program
+        GraphicsResource.programs['sprite2d'] = render_program
 
     @staticmethod
-    def get_resource(resource):
-        return GraphicsResource.resources[resource]
-   
+    def get_program(name):
+        return GraphicsResource.programs[name]
+
     @staticmethod
     def create_sprite_instance():
         from pygraphics.api.sprite.gl_sprite import GLSprite

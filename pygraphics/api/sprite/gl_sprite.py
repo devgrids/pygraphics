@@ -8,7 +8,6 @@ import numpy as np
 
 class GLSprite(Sprite):
     def __init__(self):
-        self.program = GraphicsResource.get_resource("program_sprite2d")
         self.texture = GLTexture()
         self.texture.load('deep/resources/sprites/goku/ui/transform/0.png')
 
@@ -43,21 +42,16 @@ class GLSprite(Sprite):
         glEnableVertexAttribArray(1)
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 16, ctypes.c_void_p(8))
 
-    def update(self, position, scale, rotate):
+    def update(self, program, transform=None, camera=None):
         import glm
 
         model = glm.mat4(1.0)
-        projection = glm.mat4(1.0)
+        model = glm.translate(model, glm.vec3(transform.position.x, transform.position.y, 0.0))
+        model = glm.rotate(model, glm.radians(transform.rotation.z), glm.vec3(0.0, 0.0, 1.0))
+        model = glm.scale(model, glm.vec3(transform.scale.x, transform.scale.y, 1.0))
 
-        projection = glm.ortho(-10.0, 10.0, -10.0, 10.0, -1.0, 1.0)
-
-        model = glm.translate(model, glm.vec3(position.x, position.y, 0.0))
-        model = glm.rotate(model, glm.radians(rotate), glm.vec3(0.0, 0.0, 1.0))
-        model = glm.scale(model, glm.vec3(scale.x, scale.y, 1.0))
-
-        self.program.use()
-        self.program.set_matrix("u_projection", projection)
-        self.program.set_matrix("u_model", model)
+        program.use()
+        program.set_matrix("u_model", model)
 
     def render(self):     
         glBindTexture(GL_TEXTURE_2D, self.texture.get_id())

@@ -16,6 +16,15 @@ class Camera(ClassType):
     
     def get_view_projection_matrix(self):
         return self.view_projection_matrix
+    
+    def set_projection_matrix(self, projection):
+        self.projection_matrix = projection
+    
+    def set_view_matrix(self, view):
+        self.view_matrix = view
+    
+    def set_view_projection_matrix(self, matrix):
+        self.view_projection_matrix = matrix
 
 
 

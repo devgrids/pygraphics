@@ -5,17 +5,16 @@ from pygraphics.graphics_resource import GraphicsResource
 class SpriteRenderer(Component):
     def __init__(self):
         super().__init__()
-        self.sprite = GraphicsResource.create_sprite_instance()
+        self.to = GraphicsResource.create_sprite_instance()
         self.path = "/path/to/sprite"
         self.flip = False
     
     def start(self):
-        self.sprite.init()
+        self.to.init()
 
-    def update(self):
-        # self.sprite.update()
-        pass
+    def update(self, program, transform=None, camera=None):
+        self.to.update(program, transform, camera)
 
     def render(self):
-        self.sprite.render()
+        self.to.render()
 
