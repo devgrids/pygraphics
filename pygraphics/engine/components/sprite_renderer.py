@@ -1,5 +1,4 @@
 from pygraphics.engine.components.component import Component
-from pygraphics.api.sprite.gl_sprite import GLSprite
 from pygraphics.graphics_resource import GraphicsResource
 
 class SpriteRenderer(Component):
@@ -12,9 +11,9 @@ class SpriteRenderer(Component):
     def start(self):
         self.to.start()
 
-    def update(self, program, transform=None, camera=None):
-        self.to.update(program = program, transform = transform)
+    def update(self, transform, camera=None, program=None):
+        self.to.update(transform, program)
 
-    def render(self):
-        self.to.render()
+    def render(self, texture=None):
+        self.to.render(texture)
 

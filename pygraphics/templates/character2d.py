@@ -18,10 +18,10 @@ class Character2D(CoreBehaviour):
         self.sprite_renderer.start()
 
     def update(self, camera=None):
-        self.sprite_renderer.update(self.program.to, self.transform, camera)
+        self.sprite_renderer.update(self.transform, camera, self.program.to)
 
-    def render(self):
-        self.sprite_renderer.render()
+    def render(self, texture=None):
+        self.sprite_renderer.render(texture)
 
             
         
