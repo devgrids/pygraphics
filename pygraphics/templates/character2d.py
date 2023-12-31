@@ -14,7 +14,7 @@ class Character2D(CoreBehaviour):
         self.user_interface = self.game_object.get_component(UserInterface)
 
     def start(self):
-        pass
+        self.sprite_renderer.start()
 
     def update(self):
         pass

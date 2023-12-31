@@ -2,7 +2,7 @@ from pygraphics.api.type.render_type import RenderType
 from pygraphics.api.type.input_type import InputType
 from pygraphics.api.type.gui_type import GuiType
 
-class FactoryEngine:
+class GraphicsApi:
     
     app_width = 1080
     app_height = 720
@@ -18,18 +18,18 @@ class FactoryEngine:
     @staticmethod
     def create_render_instance():
         from pygraphics.api.render.gl4_render import GL4Render
-        if FactoryEngine.selected_graphics_backend == RenderType.GL4:
-            return GL4Render(FactoryEngine.app_width, FactoryEngine.app_height)
+        if GraphicsApi.selected_graphics_backend == RenderType.GL4:
+            return GL4Render(GraphicsApi.app_width, GraphicsApi.app_height)
         else:
             return None
     
     @staticmethod
     def create_input_manager_instance():
         from pygraphics.api.input_manager.gl_glfw_input_manager import GlGlfwInputManager
-        if FactoryEngine.selected_input_backend == InputType.GLFW:
-            if FactoryEngine.selected_graphics_backend == RenderType.GL1:
+        if GraphicsApi.selected_input_backend == InputType.GLFW:
+            if GraphicsApi.selected_graphics_backend == RenderType.GL1:
                 return GlGlfwInputManager()
-            elif FactoryEngine.selected_graphics_backend == RenderType.GL4:
+            elif GraphicsApi.selected_graphics_backend == RenderType.GL4:
                 return GlGlfwInputManager()
             else:
                 return None
@@ -39,14 +39,14 @@ class FactoryEngine:
     @staticmethod
     def create_gui_instance():
         from pygraphics.api.gui.gl_glfw_imgui import GlGlfwImgui 
-        if FactoryEngine.selected_input_backend == InputType.GLFW:
-            if FactoryEngine.selected_graphics_backend == RenderType.GL1:
-                if FactoryEngine.selected_gui_backend == GuiType.IMGUI:
+        if GraphicsApi.selected_input_backend == InputType.GLFW:
+            if GraphicsApi.selected_graphics_backend == RenderType.GL1:
+                if GraphicsApi.selected_gui_backend == GuiType.IMGUI:
                     return GlGlfwImgui()
                 else:
                     return None
-            elif FactoryEngine.selected_graphics_backend == RenderType.GL4:
-                if FactoryEngine.selected_gui_backend == GuiType.IMGUI:
+            elif GraphicsApi.selected_graphics_backend == RenderType.GL4:
+                if GraphicsApi.selected_gui_backend == GuiType.IMGUI:
                     return GlGlfwImgui()
                 else:
                     return None
@@ -57,51 +57,51 @@ class FactoryEngine:
         
     @staticmethod
     def get_new_render():
-        FactoryEngine.render = FactoryEngine.create_render_instance()
-        return FactoryEngine.render
+        GraphicsApi.render = GraphicsApi.create_render_instance()
+        return GraphicsApi.render
     
     @staticmethod
     def get_new_input_manager():
-        FactoryEngine.input_manager = FactoryEngine.create_input_manager_instance()
-        return FactoryEngine.input_manager
+        GraphicsApi.input_manager = GraphicsApi.create_input_manager_instance()
+        return GraphicsApi.input_manager
     
     @staticmethod
     def get_new_gui():
-        FactoryEngine.gui = FactoryEngine.create_gui_instance()
-        return FactoryEngine.gui
+        GraphicsApi.gui = GraphicsApi.create_gui_instance()
+        return GraphicsApi.gui
         
     @staticmethod
     def set_type_graphic(type_graphic):
-        FactoryEngine.selected_graphics_backend = type_graphic
+        GraphicsApi.selected_graphics_backend = type_graphic
 
     @staticmethod
     def set_type_input(type_input):
-        FactoryEngine.selected_input_backend = type_input
+        GraphicsApi.selected_input_backend = type_input
 
     @staticmethod
     def set_type_gui(type_gui):
-        FactoryEngine.selected_gui_backend = type_gui
+        GraphicsApi.selected_gui_backend = type_gui
 
     @staticmethod
     def get_type_graphic():
-        return FactoryEngine.selected_graphics_backend
+        return GraphicsApi.selected_graphics_backend
     
     @staticmethod
     def get_type_input():
-        return FactoryEngine.selected_input_backend
+        return GraphicsApi.selected_input_backend
     
     @staticmethod
     def get_type_gui():
-        return FactoryEngine.selected_gui_backend
+        return GraphicsApi.selected_gui_backend
 
     @staticmethod
     def get_render():
-        return FactoryEngine.render
+        return GraphicsApi.render
     
     @staticmethod
     def get_input():
-        return FactoryEngine.input_manager
+        return GraphicsApi.input_manager
     
     @staticmethod
     def get_gui():
-        return FactoryEngine.gui
+        return GraphicsApi.gui

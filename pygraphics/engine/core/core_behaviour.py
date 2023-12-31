@@ -15,19 +15,3 @@ class CoreBehaviour:
 
     def render(self):
         pass
-
-# # Ejemplo de uso
-# class MyBehaviour(CoreBehaviour):
-#     def start(self):
-#         print("Starting MyBehaviour")
-
-#     def update(self):
-#         print("Updating MyBehaviour")
-
-#     def render(self):
-#         print("Rendering MyBehaviour")
-
-# my_behaviour = MyBehaviour()
-# my_behaviour.start()
-# my_behaviour.update()
-# my_behaviour.render()

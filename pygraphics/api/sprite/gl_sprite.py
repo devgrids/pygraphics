@@ -3,20 +3,14 @@ from pygraphics.api.sprite.sprite import Sprite
 from pygraphics.api.type.render_program import RenderProgramType
 from pygraphics.api.render_program.glsl_shader import GLSLShader
 from pygraphics.api.texture.gl_texture import GLTexture
+from pygraphics.graphics_resource import GraphicsResource
 import numpy as np
 
 class GLSprite(Sprite):
     def __init__(self):
-        #super().__init__()
-        self.program = GLSLShader()
-        self.program.set_program("pygraphics/resources/shaders/model.vert", RenderProgramType.VERTEX)
-        self.program.set_program("pygraphics/resources/shaders/model.frag", RenderProgramType.FRAGMENT)
-        self.program.link_programs()
-        
-
+        self.program = GraphicsResource.get_resource("program_sprite2d")
         self.texture = GLTexture()
         self.texture.load('deep/resources/sprites/goku/ui/transform/0.png')
-        # glBindTexture(GL_TEXTURE_2D, self.texture.get_id())
 
     def init(self):
         vertices = [
@@ -65,7 +59,6 @@ class GLSprite(Sprite):
         self.program.set_matrix("u_projection", projection)
         self.program.set_matrix("u_model", model)
 
-    def render(self):
-        
+    def render(self):     
         glBindTexture(GL_TEXTURE_2D, self.texture.get_id())
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, None)

@@ -13,7 +13,7 @@ class GLSLShader(RenderProgram):
         self.error_msgs = ""
         self.programs = {}
         self.shaders_code = {}
-        self.logger = ConsoleLogger(f"glsl_shader.py", False, True, True)
+        # self.logger = ConsoleLogger(f"glsl_shader.py", False, True, True)
 
     def set_program(self, program_src, type):
         self.shaders_code[type] = self.read_file(program_src)
@@ -25,19 +25,31 @@ class GLSLShader(RenderProgram):
             with open(file_name, 'r') as file:
                 content = file.read()
         else:
-            self.logger.error('File not found: %s' % file_name)
+            # self.logger.error('File not found: %s' % file_name)
+            print("Error")
         return content
     
     def link_programs(self):
-        self.use()
         self.compile()
         self.program_id = glCreateProgram()
-             
+
         for shader_type, shader_id in self.programs.items():
             glAttachShader(self.program_id, shader_id)
-            glDeleteShader(self.programs[shader_type])
 
         glLinkProgram(self.program_id)
+
+        # Verificación del enlace del programa
+        link_status = glGetProgramiv(self.program_id, GL_LINK_STATUS)
+        if not link_status:
+            # Obtener y mostrar el log de errores
+            info_log = glGetProgramInfoLog(self.program_id)
+            print(f"Error en la vinculación del programa: {info_log}")
+
+        for shader_type, shader_id in self.programs.items():
+            glDeleteShader(shader_id)
+
+        self.use()  # Ahora usamos el programa después de enlazarlo
+
     
     def get_shader_to_enum(self, type):
         if type == RenderProgramType.VERTEX:
@@ -55,10 +67,17 @@ class GLSLShader(RenderProgram):
             code = self.shaders_code[shader_type]
             glShaderSource(self.programs[shader_type], code)
             glCompileShader(self.programs[shader_type])
-            # check_shader_error(self.programs[shader_type])
+
+            # Verificación del estado de la compilación
+            compile_status = glGetShaderiv(self.programs[shader_type], GL_COMPILE_STATUS)
+            if not compile_status:
+                # Obtener y mostrar el log de errores
+                info_log = glGetShaderInfoLog(self.programs[shader_type])
+                print(f"Error en la compilación del shader {shader_type}: {info_log}")
 
     def use(self):
-        glUseProgram(self.program_id)
+        if self.program_id != 0:
+            glUseProgram(self.program_id)
   
     def get_var_ui(self, name):
         return self.program_var_list[name]

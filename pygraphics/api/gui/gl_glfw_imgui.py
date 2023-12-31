@@ -11,6 +11,8 @@ from OpenGL.GL.shaders import compileProgram, compileShader
 import imgui
 from imgui.integrations.glfw import GlfwRenderer
 
+from pygraphics.helpers.functions import execute_function
+
 from pygraphics.engine.components.transform import Transform
 from pygraphics.engine.components.sprite_renderer import SpriteRenderer
 # from pygraphics.engine.components.user_interface import UserInterface
@@ -253,9 +255,6 @@ class GlGlfwImgui(Gui):
         if self.font is not None:
             imgui.pop_font()
 
-    def execute_function(self, func, *args, **kwargs):
-        func(*args, **kwargs)
-
     def widget(self, id, code=None):
         self.flag = False
         with imgui.begin(id):
@@ -310,7 +309,7 @@ class GlGlfwImgui(Gui):
 
 
     def set_drag_float_3f(self, id: str, label: str, value) -> bool:            
-        self.widget(id, self.execute_function(self.widget_drag_float_3f, label, value))
+        self.widget(id, execute_function(self.widget_drag_float_3f, label, value))
         return self.flag
     
     def info(self):

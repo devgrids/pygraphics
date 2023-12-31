@@ -5,26 +5,30 @@ from pygraphics.api.type.render_type import RenderType
 from pygraphics.api.type.input_type import InputType
 from pygraphics.api.type.gui_type import GuiType
 
-from pygraphics.factory_engine import FactoryEngine
+from pygraphics.graphics_api import GraphicsApi
 from pygraphics.system import System
 
-from pygraphics.templates.character2d import Character2D
+from pygraphics.engine.components.animator import Animator
+
 
 def test():
     print("Testing")
 
 def main():
-    FactoryEngine.set_type_graphic(RenderType.GL4)
-    FactoryEngine.set_type_input(InputType.GLFW)
-    FactoryEngine.set_type_gui(GuiType.IMGUI)
+    GraphicsApi.set_type_graphic(RenderType.GL4)
+    GraphicsApi.set_type_input(InputType.GLFW)
+    GraphicsApi.set_type_gui(GuiType.IMGUI)
     
     System.init()
 
-    character = Character2D()
-    character.start()
+    character = System.new_character2d()
+    # character.start()
+
+    character1 = System.new_character2d()
+    character1.game_object.remove_component(Animator)
+    # character1.start()
     
     def loop():
-        character.render()
         if System.input_manager.is_pressed_down('e'):
             System.exit()
         if System.input_manager.is_pressed_down('f'):
@@ -34,6 +38,7 @@ def main():
         System.gui.info()
         System.gui.tweak()
         System.gui.object(character.game_object)
+        System.gui.object(character1.game_object)
 
     System.loop(loop)
     return 0
