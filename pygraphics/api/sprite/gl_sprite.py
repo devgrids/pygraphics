@@ -11,7 +11,7 @@ class GLSprite(Sprite):
         self.texture = GLTexture()
         self.texture.load('deep/resources/sprites/goku/ui/transform/0.png')
 
-    def init(self):
+    def start(self, *args, **kwargs):
         vertices = [
             -0.5, -0.5, 0.0, 0.0,
              0.5, -0.5, 1.0, 0.0,
@@ -42,8 +42,11 @@ class GLSprite(Sprite):
         glEnableVertexAttribArray(1)
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 16, ctypes.c_void_p(8))
 
-    def update(self, program, transform=None, camera=None):
+    def update(self, *args, **kwargs):
         import glm
+
+        program = kwargs.get('program')
+        transform = kwargs.get('transform')
 
         model = glm.mat4(1.0)
         model = glm.translate(model, glm.vec3(transform.position.x, transform.position.y, 0.0))
@@ -53,6 +56,6 @@ class GLSprite(Sprite):
         program.use()
         program.set_matrix("u_model", model)
 
-    def render(self):     
+    def render(self, *args, **kwargs):     
         glBindTexture(GL_TEXTURE_2D, self.texture.get_id())
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, None)

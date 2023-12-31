@@ -1,13 +1,13 @@
-from pygraphics.engine.core.core import Core
-class Sprite(Core):
-    def __init__(self):
-        pass
-
+from abc import ABC, abstractmethod
+class Core(ABC):
+    @abstractmethod
     def start(self, *args, **kwargs):
         pass
 
+    @abstractmethod
     def update(self, *args, **kwargs):
         pass
 
+    @abstractmethod
     def render(self, *args, **kwargs):
         pass

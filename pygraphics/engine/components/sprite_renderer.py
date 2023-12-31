@@ -10,10 +10,10 @@ class SpriteRenderer(Component):
         self.flip = False
     
     def start(self):
-        self.to.init()
+        self.to.start()
 
     def update(self, program, transform=None, camera=None):
-        self.to.update(program, transform, camera)
+        self.to.update(program = program, transform = transform)
 
     def render(self):
         self.to.render()
