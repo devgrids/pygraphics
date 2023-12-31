@@ -1,9 +1,6 @@
 from OpenGL.GL import *
 from pygraphics.api.sprite.sprite import Sprite
-from pygraphics.api.type.render_program import RenderProgramType
-from pygraphics.api.render_program.glsl_shader import GLSLShader
 from pygraphics.api.texture.gl_texture import GLTexture
-from pygraphics.graphics_resource import GraphicsResource
 import numpy as np
 
 class GLSprite(Sprite):
