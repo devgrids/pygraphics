@@ -20,14 +20,17 @@ def main():
     character = System.new_character2d("deep/resources/sprites/broly/base/icon.png")
     character1 = System.new_character2d("deep/resources/sprites/goku/base/icon.png")
     
-    character1.game_object.remove_component(Animator)
-    
     def loop():
         if System.input_manager.is_pressed_down('e'):
             System.exit()
-        if System.input_manager.is_pressed_down('f'):
-            character.transform.position.x+=1
-            print("Hola, Yordy Leonidas MV!")
+        if System.input_manager.is_pressed('a'):
+            character.transform.position.x-=0.01
+        if System.input_manager.is_pressed('d'):
+            character.transform.position.x+=0.01
+        if System.input_manager.is_pressed('w'):
+            character.transform.position.y+=0.01
+        if System.input_manager.is_pressed('s'):
+            character.transform.position.y-=0.01
         # System.gui.demo()
         System.gui.info()
         System.gui.tweak()

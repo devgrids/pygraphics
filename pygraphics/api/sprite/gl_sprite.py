@@ -6,8 +6,7 @@ import glm
 
 class GLSprite(Sprite):
     def __init__(self):
-        self.texture = GLTexture()
-        self.texture.load('deep/resources/sprites/goku/ui/transform/0.png')
+        pass
 
     def start(self):
         vertices = [
