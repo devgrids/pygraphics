@@ -2,9 +2,9 @@ from pygraphics.engine.components.component import Component
 from pygraphics.graphics_resource import GraphicsResource
 
 class Program(Component):
-    def __init__(self, name):
+    def __init__(self, path=None):
         super().__init__()
-        self.to = GraphicsResource.load_program(name)
+        self.to = GraphicsResource.load_program(path)
     
     def start(self):
         pass
@@ -14,4 +14,7 @@ class Program(Component):
 
     def render(self):
         pass
+
+    def load(self, path):
+        self.to = GraphicsResource.load_program(path)
 

@@ -274,7 +274,7 @@ class GlGlfwImgui(Gui):
                     imgui.tree_pop()
             if sprite_renderer is not None:
                 if imgui.tree_node("sprite renderer"):
-                    imgui.text("path: %s" % sprite_renderer.path)
+                    # imgui.text("path: %s" % sprite_renderer.path)
                     imgui.tree_pop()
             if animator is not None:
                 if imgui.tree_node("animator"):

@@ -49,6 +49,6 @@ class GLSprite(Sprite):
         program.use()
         program.set_matrix("u_model", model)
 
-    def render(self, texture=None):     
-        glBindTexture(GL_TEXTURE_2D, self.texture.get_id())
+    def render(self, texture):     
+        glBindTexture(GL_TEXTURE_2D, texture.get_id())
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, None)

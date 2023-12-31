@@ -2,14 +2,12 @@ from pygraphics.engine.components.component import Component
 from pygraphics.graphics_resource import GraphicsResource
 
 class Texture(Component):
-    def __init__(self):
+    def __init__(self, path=None):
         super().__init__()
-        self.to = GraphicsResource.create_sprite_instance()
-        self.path = "/path/to/sprite"
-        self.flip = False
+        self.to = GraphicsResource.load_texture(path)
     
     def start(self):
-        self.to.start()
+        pass
 
     def update(self):
         pass
@@ -17,3 +15,5 @@ class Texture(Component):
     def render(self):
         pass
 
+    def load(self, path):
+        self.to = GraphicsResource.load_texture(path)

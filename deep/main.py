@@ -17,8 +17,8 @@ def main():
     
     System.init()
 
-    character = System.new_character2d()
-    character1 = System.new_character2d()
+    character = System.new_character2d("deep/resources/sprites/broly/base/icon.png")
+    character1 = System.new_character2d("deep/resources/sprites/goku/base/icon.png")
     
     character1.game_object.remove_component(Animator)
     
@@ -31,8 +31,6 @@ def main():
         # System.gui.demo()
         System.gui.info()
         System.gui.tweak()
-        System.gui.object(character.game_object)
-        System.gui.object(character1.game_object)
 
     System.loop(loop)
     return 0

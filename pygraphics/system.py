@@ -45,9 +45,9 @@ class System:
         System.end = True
 
     @staticmethod
-    def new_character2d():
+    def new_character2d(path_sprite):
         from pygraphics.templates.character2d import Character2D
-        character2d = Character2D()
+        character2d = Character2D(path_sprite)
         System.objects.append(character2d)
         return character2d
     
