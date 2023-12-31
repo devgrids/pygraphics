@@ -4,20 +4,40 @@ from pygraphics.api.type.input_type import InputType
 class GraphicsResource:
 
     programs = {}
+    textures = {}
 
     @staticmethod
     def init():
         # Load render program
-        from pygraphics.api.type.render_program import RenderProgramType
-        render_program = GraphicsResource.create_render_program_instance()
-        render_program.set_program("pygraphics/resources/shaders/model.vert", RenderProgramType.VERTEX)
-        render_program.set_program("pygraphics/resources/shaders/model.frag", RenderProgramType.FRAGMENT)
-        render_program.link_programs()
-        GraphicsResource.programs['sprite2d'] = render_program
+        GraphicsResource.load_program("sprite2d")  
 
     @staticmethod
-    def get_program(name):
-        return GraphicsResource.programs[name]
+    def load_program(path):
+        if path in GraphicsResource.programs:
+            return GraphicsResource.programs[path]      
+        from pygraphics.api.type.render_program import RenderProgramType
+        render_program = GraphicsResource.create_render_program_instance()
+        path_elements = path.split('/')
+        if len(path_elements) == 1:
+            render_program.set_program("pygraphics/resources/shaders/"+path+".vert", RenderProgramType.VERTEX)
+            render_program.set_program("pygraphics/resources/shaders/"+path+".frag", RenderProgramType.FRAGMENT)
+        else:
+            render_program.set_program(path+".vert", RenderProgramType.VERTEX)
+            render_program.set_program(path+".frag", RenderProgramType.FRAGMENT)
+            filename_with_extension = path_elements[-1]
+            path = filename_with_extension.split('.')[0]
+        render_program.link_programs()
+        GraphicsResource.programs[path] = render_program
+        return render_program
+    
+    @staticmethod
+    def load_texture(path):
+        if path in GraphicsResource.textures:
+            return GraphicsResource.textures[path]
+        texture = GraphicsResource.create_texture_instance()
+        texture.load(path)
+        GraphicsResource.textures[path] = texture
+        return texture
 
     @staticmethod
     def create_sprite_instance():
@@ -38,8 +58,7 @@ class GraphicsResource:
             return None
         
     @staticmethod
-    def create_render_program_instance():
-        
+    def create_render_program_instance():     
         from pygraphics.api.render_program.glsl_shader import GLSLShader
         from pygraphics.graphics_api import GraphicsApi
 
@@ -49,6 +68,20 @@ class GraphicsResource:
             return None
         elif type_graphic == RenderType.GL4:
             return GLSLShader()
+        else:
+            return None
+        
+    @staticmethod
+    def create_texture_instance():     
+        from pygraphics.api.texture.gl_texture import GLTexture
+        from pygraphics.graphics_api import GraphicsApi
+
+        type_graphic = GraphicsApi.get_type_graphic()
+        
+        if type_graphic == RenderType.GL1:
+            return None
+        elif type_graphic == RenderType.GL4:
+            return GLTexture()
         else:
             return None
 

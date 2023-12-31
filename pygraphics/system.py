@@ -52,7 +52,7 @@ class System:
         return character2d
     
     @staticmethod
-    def loop(code_source):       
+    def loop(code_source):     
         for object in System.objects:
                 object.start()
         while not System.render.is_closed() and not System.end:

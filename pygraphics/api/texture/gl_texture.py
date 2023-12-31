@@ -2,7 +2,7 @@ from pygraphics.api.texture.texture import Texture
 
 class GLTexture(Texture):
     def __init__(self):
-        self.id = None
+        super().__init__()
 
     def load(self, path):
         import OpenGL.GL as gl
@@ -22,6 +22,4 @@ class GLTexture(Texture):
         gl.glTexImage2D(gl.GL_TEXTURE_2D, 0, gl.GL_RGBA, img.size[0], img.size[1], 0, gl.GL_RGBA, gl.GL_UNSIGNED_BYTE, img_data)
         gl.glGenerateMipmap(gl.GL_TEXTURE_2D)
 
-    def get_id(self):
-        return self.id
         

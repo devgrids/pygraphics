@@ -1,15 +1,17 @@
 from pygraphics.engine.components.component import Component
 from pygraphics.graphics_resource import GraphicsResource
 
-class Program(Component):
-    def __init__(self, name):
+class Texture(Component):
+    def __init__(self):
         super().__init__()
-        self.to = GraphicsResource.load_program(name)
+        self.to = GraphicsResource.create_sprite_instance()
+        self.path = "/path/to/sprite"
+        self.flip = False
     
     def start(self):
-        pass
+        self.to.start()
 
-    def update(self, transform, camera=None):
+    def update(self):
         pass
 
     def render(self):

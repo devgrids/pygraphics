@@ -18,8 +18,8 @@ def main():
     System.init()
 
     character = System.new_character2d()
-
     character1 = System.new_character2d()
+    
     character1.game_object.remove_component(Animator)
     
     def loop():
