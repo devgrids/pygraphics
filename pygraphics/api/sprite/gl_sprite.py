@@ -6,7 +6,9 @@ import glm
 
 class GLSprite(Sprite):
     def __init__(self):
-        pass
+        self.vao = 0
+        self.vbo = 0
+        self.ebo = 0
 
     def start(self):
         vertices = [
@@ -23,15 +25,15 @@ class GLSprite(Sprite):
         vertices = np.array(vertices, dtype=np.float32)
         indices = np.array(indices, dtype=np.uint32)
 
-        vao = glGenVertexArrays(1)
-        glBindVertexArray(vao)
+        self.vao = glGenVertexArrays(1)
+        glBindVertexArray(self.vao)
 
-        vbo = glGenBuffers(1)
-        glBindBuffer(GL_ARRAY_BUFFER, vbo)
+        self.vbo = glGenBuffers(1)
+        glBindBuffer(GL_ARRAY_BUFFER, self.vbo)
         glBufferData(GL_ARRAY_BUFFER, vertices.nbytes, vertices, GL_STATIC_DRAW)
 
-        ebo = glGenBuffers(1)
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo)
+        self.ebo = glGenBuffers(1)
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self.ebo)
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.nbytes, indices, GL_STATIC_DRAW)
 
         glEnableVertexAttribArray(0)
