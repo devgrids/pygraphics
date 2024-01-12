@@ -24,13 +24,13 @@ def main():
         if System.input_manager.is_pressed_down('e'):
             System.exit()
         if System.input_manager.is_pressed('a'):
-            character.transform.position.x-=0.01
+            character.transform.position.x-=1.5*System.time_manager.get_delta_time()
         if System.input_manager.is_pressed('d'):
-            character.transform.position.x+=0.01
+            character.transform.position.x+=1.5*System.time_manager.get_delta_time()
         if System.input_manager.is_pressed('w'):
-            character.transform.position.y+=0.01
+            character.transform.position.y+=1.5*System.time_manager.get_delta_time()
         if System.input_manager.is_pressed('s'):
-            character.transform.position.y-=0.01
+            character.transform.position.y-=1.5*System.time_manager.get_delta_time()
         # System.gui.demo()
         System.gui.info()
         System.gui.tweak()

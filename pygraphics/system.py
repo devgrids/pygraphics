@@ -8,6 +8,7 @@ class System:
 
     render = None
     input_manager = None
+    time_manager = None
     gui = None
     camera = None
 
@@ -20,10 +21,11 @@ class System:
     def init():
         System.render = GraphicsApi.get_new_render()
         System.input_manager = GraphicsApi.get_new_input_manager()
+        System.time_manager = GraphicsApi.get_new_time_manager()
         System.gui = GraphicsApi.get_new_gui()
         
-        System.camera = OrthographicCamera()
         import glm
+        System.camera = OrthographicCamera()
         System.camera.set_projection_matrix(glm.ortho(-10.0, 10.0, -10.0, 10.0, -1.0, 1.0))
         
         System.render.init()
@@ -34,6 +36,7 @@ class System:
 
         System.input_manager.link_gui(System.gui)
         System.input_manager.init()
+        System.time_manager.init()
 
         GraphicsResource.init()
         program = GraphicsResource.programs["sprite2d"]
@@ -56,6 +59,7 @@ class System:
         for object in System.objects:
                 object.start()
         while not System.render.is_closed() and not System.end:
+            System.time_manager.update()
             System.render.update()
             System.gui.update()
             for object in System.objects:

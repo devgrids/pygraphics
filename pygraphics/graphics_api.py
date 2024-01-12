@@ -13,6 +13,7 @@ class GraphicsApi:
 
     render = None
     input_manager = None
+    time_manager = None
     gui = None
 
     @staticmethod
@@ -33,6 +34,14 @@ class GraphicsApi:
                 return GlGlfwInputManager()
             else:
                 return None
+        else:
+            return None
+        
+    @staticmethod
+    def create_time_manager_instance():
+        from pygraphics.api.time_manager.glfw_time_manager import GLFWTimeManager
+        if GraphicsApi.selected_input_backend == InputType.GLFW:
+            return GLFWTimeManager()
         else:
             return None
         
@@ -64,6 +73,11 @@ class GraphicsApi:
     def get_new_input_manager():
         GraphicsApi.input_manager = GraphicsApi.create_input_manager_instance()
         return GraphicsApi.input_manager
+    
+    @staticmethod
+    def get_new_time_manager():
+        GraphicsApi.time_manager = GraphicsApi.create_time_manager_instance()
+        return GraphicsApi.time_manager
     
     @staticmethod
     def get_new_gui():
@@ -99,8 +113,12 @@ class GraphicsApi:
         return GraphicsApi.render
     
     @staticmethod
-    def get_input():
+    def get_input_manager():
         return GraphicsApi.input_manager
+    
+    @staticmethod
+    def get_time_manager():
+        return GraphicsApi.time_manager
     
     @staticmethod
     def get_gui():
