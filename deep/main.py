@@ -42,9 +42,6 @@ def main():
         if System.input_manager.is_pressed('s'):
             player.transform.position.y-=speed*delta_time
 
-        System.draw_pixel(3,0, glm.vec3(0.0, 1.0, 0.0))
-        System.draw_pixel(1,0)
-
         
 
     System.loop(loop)

@@ -34,6 +34,7 @@ pip install numpy
 pip install torch
 pip install pandas
 pip install matplotlib
+pip install pymunk
 
 NOT RECOMEND: pip install git+https://github.com/swistakm/pyimgui.git
 pip install git+https://github.com/swistakm/pyimgui.git@<tag-branch-or-commit>

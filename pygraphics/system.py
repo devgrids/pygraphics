@@ -79,10 +79,10 @@ class System:
             System.time_manager.update()
             System.render.update()
             System.gui.update()
-            code_source()
             for object in System.objects:
                 object.update(System.camera)
                 object.render()
+            code_source()
             System.gui.info()
             System.gui.tweak()
             System.gui.render()
