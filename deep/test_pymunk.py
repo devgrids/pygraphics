@@ -24,30 +24,42 @@ def main():
     
     System.init()
 
-    y_suelo = -20
+    y_suelo = -28.25
 
     # Crear un espacio y establecer la gravedad
     space = pymunk.Space()
-    space.gravity = (0, -981)
+    # space.gravity = (0, -981)
     space.damping = 0.9  # Amortiguamiento para reducir el efecto de rebote
 
     # Crear un suelo
-    suelo_body = pymunk.Body(body_type=pymunk.Body.STATIC)
-    suelo_shape = pymunk.Segment(suelo_body, (-40, y_suelo), (40, y_suelo), 5)
-    suelo_shape.elasticity = 0.0
-    suelo_shape.friction = 0.0
+    suelo_body = pymunk.Body(body_type=pymunk.Body.STATIC, moment=float('inf'))
+    suelo_shape = pymunk.Segment(suelo_body, (0, y_suelo), (0, y_suelo), 4)
+    suelo_shape.elasticity = 0.1
+    suelo_shape.friction = 1.0
     space.add(suelo_body, suelo_shape)
 
+    # Crear un suelo
+    suelo_body2 = pymunk.Body(body_type=pymunk.Body.STATIC, moment=float('inf'))
+    suelo_shape2 = pymunk.Segment(suelo_body2, (0, 28.25), (0, 28.25), 4)
+    suelo_shape2.elasticity = 0.1
+    suelo_shape2.friction = 1.0
+    space.add(suelo_body2, suelo_shape2)
+
+
     # Crear un cuerpo y una forma de ladrillo
-    ladrillo_body = pymunk.Body(100, 100)
-    ladrillo_body.position = (0, 50)  # Posición inicial del ladrillo
-    ladrillo_shape = pymunk.Poly.create_box(ladrillo_body, (10, 10))
+    # Calcular el momento de inercia para un ladrillo
+    dimensiones_ladrillo = (10, 10)
+    masa_ladrillo = 10
+    momento_ladrillo = pymunk.moment_for_box(masa_ladrillo, dimensiones_ladrillo)
+    ladrillo_body = pymunk.Body(masa_ladrillo, momento_ladrillo)
+    ladrillo_body.position = (0, 15)  # Posición inicial del ladrillo
+    ladrillo_shape = pymunk.Poly.create_box(ladrillo_body, dimensiones_ladrillo)
     ladrillo_shape.elasticity = 0.0
     ladrillo_shape.friction = 0.0
     space.add(ladrillo_body, ladrillo_shape)
 
     # Opcional: Limitar la rotación del ladrillo
-    ladrillo_body.angular_velocity = 0
+    ladrillo_body.angular_velocity = 0 
     ladrillo_body.angular_velocity_limit = 0
 
      # Configurar el handler de colisión
@@ -55,23 +67,25 @@ def main():
     handler.begin = colision_ladrillo_suelo
 
 
-    import time
-
-    # # Simulación durante 10 segundos
-    # for i in range(200):
-    #     print(f"Tiempo: {i/20:.2f} s, Posición de la bola: {body.position}")
-    #     space.step(1/20)  # Avanzar la simulación
-    #     time.sleep(1/20)  # Esperar para sincronizar con el tiempo real
-
-
-
+    fuerza = 20
     def loop():
 
         delta_time = System.time_manager.get_delta_time()
         space.step(1/60)
         
-        if System.input_manager.is_pressed_down('e'):
-            System.exit()
+
+        if System.input_manager.is_pressed('a'):
+            ladrillo_body.apply_force_at_local_point((-fuerza, 0), (0, 0))
+        
+        if System.input_manager.is_pressed('d'):
+            ladrillo_body.apply_force_at_local_point((fuerza, 0), (0, 0))
+
+        if System.input_manager.is_pressed('w'):
+            ladrillo_body.apply_force_at_local_point((0, fuerza), (0, 0))
+
+        if System.input_manager.is_pressed('s'):
+            ladrillo_body.apply_force_at_local_point((0, -fuerza), (0, 0))
+
         
         System.draw_pixel(ladrillo_body.position[0],ladrillo_body.position[1], glm.vec3(0.0, 1.0, 0.0))
         System.draw_pixel(1,0)

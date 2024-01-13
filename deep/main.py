@@ -31,8 +31,6 @@ def main():
 
         delta_time = System.time_manager.get_delta_time()
         
-        if System.input_manager.is_pressed_down('e'):
-            System.exit()
         if System.input_manager.is_pressed('a'):
             player.transform.position.x-=speed*delta_time
         if System.input_manager.is_pressed('d'):
@@ -42,7 +40,6 @@ def main():
         if System.input_manager.is_pressed('s'):
             player.transform.position.y-=speed*delta_time
 
-        
 
     System.loop(loop)
     return 0
