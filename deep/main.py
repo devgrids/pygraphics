@@ -1,6 +1,8 @@
 import sys
 sys.path.append('C:\\dev\\deep')
 
+import glm
+
 from pygraphics.api.type.render_type import RenderType
 from pygraphics.api.type.input_type import InputType
 from pygraphics.api.type.gui_type import GuiType
@@ -18,19 +20,25 @@ def main():
     System.init()
 
     character = System.new_character2d("deep/resources/sprites/broly/base/icon.png")
-    character1 = System.new_character2d("deep/resources/sprites/goku/base/icon.png")
-    
+    speed = 1.75
+
     def loop():
+        delta_time = System.time_manager.get_delta_time()
+        
         if System.input_manager.is_pressed_down('e'):
             System.exit()
         if System.input_manager.is_pressed('a'):
-            character.transform.position.x-=1.5*System.time_manager.get_delta_time()
+            character.transform.position.x-=speed*delta_time
         if System.input_manager.is_pressed('d'):
-            character.transform.position.x+=1.5*System.time_manager.get_delta_time()
+            character.transform.position.x+=speed*delta_time
         if System.input_manager.is_pressed('w'):
-            character.transform.position.y+=1.5*System.time_manager.get_delta_time()
+            character.transform.position.y+=speed*delta_time
         if System.input_manager.is_pressed('s'):
-            character.transform.position.y-=1.5*System.time_manager.get_delta_time()
+            character.transform.position.y-=speed*delta_time
+
+        System.draw_pixel(3,0, glm.vec3(0.0, 1.0, 0.0))
+        System.draw_pixel(1,0)
+
         # System.gui.demo()
         System.gui.info()
         System.gui.tweak()

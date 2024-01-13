@@ -1,6 +1,4 @@
-from pygraphics.engine.components.component import Component
-
-class Shape2D(Component):
+class Shape2D():
     def __init__(self):
         pass
     

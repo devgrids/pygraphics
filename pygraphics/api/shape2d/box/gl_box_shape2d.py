@@ -1,8 +1,8 @@
-from pygraphics.api.shape2d.shape2d import Component
+from pygraphics.api.shape2d.shape2d import Shape2D
 from OpenGL.GL import *
 import glm
 
-class GLBoxShape2D(Component):
+class GLBoxShape2D(Shape2D):
     def __init__(self):
         self.VAO = 0
 
@@ -44,12 +44,12 @@ class GLBoxShape2D(Component):
         model = glm.translate(model, glm.vec3(transform.position.x, transform.position.y, 0.0))
         model = glm.rotate(model, glm.radians(transform.rotation.z), glm.vec3(0.0, 0.0, 1.0))
         model = glm.scale(model, glm.vec3(transform.scale.x, transform.scale.y, 1.0))
-
         program.use()
         program.set_matrix("u_model", model)
 
-    def render(self, program):
+    def render(self, color, program):
         program.use()
+        program.set_vec3("u_color", color)
         glBindVertexArray(self.VAO)
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, None)
 
