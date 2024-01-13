@@ -29,7 +29,7 @@ class System:
         System.gui = GraphicsApi.get_new_gui()
         
         System.camera = OrthographicCamera()
-        System.camera.set_projection_matrix(glm.ortho(-10.0, 10.0, -10.0, 10.0, -1.0, 1.0))
+        System.camera.set_projection_matrix(glm.ortho(-20.0, 20.0, -20.0, 20.0, -1.0, 1.0))
         
         System.render.init()
         System.gui.init()
@@ -65,11 +65,11 @@ class System:
         System.pixel.render(color)
     
     @staticmethod
-    def new_character2d(path_sprite):
-        from pygraphics.templates.character2d import Character2D
-        character2d = Character2D(path_sprite)
-        System.objects.append(character2d)
-        return character2d
+    def new_game_object_2d(path_sprite):
+        from pygraphics.templates.game_object_2d import GameObject2D
+        object = GameObject2D(path_sprite)
+        System.objects.append(object)
+        return object
     
     @staticmethod
     def loop(code_source):     
@@ -83,6 +83,8 @@ class System:
             for object in System.objects:
                 object.update(System.camera)
                 object.render()
+            System.gui.info()
+            System.gui.tweak()
             System.gui.render()
             System.input_manager.buffers_events()
         System.gui.clear()

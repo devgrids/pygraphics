@@ -47,6 +47,9 @@ class GlGlfwImgui(Gui):
         self.flag = False
         self.change_swap_interval = False
         self.colors = [1.0, 0.0, 0.0]
+        self.enable_info = False
+        self.enable_tweak = False
+        self.enable_objects = False
 
     # def __del__(self):
     #     self.clear()
@@ -58,6 +61,30 @@ class GlGlfwImgui(Gui):
 
     def update(self):
         imgui.new_frame()
+        # System.gui.demo()
+        
+        with imgui.begin_main_menu_bar() as main_menu_bar:
+            if main_menu_bar.opened:
+                with imgui.begin_menu("File", True) as file_menu:
+                    if file_menu.opened:
+                        clicked_quit, selected_quit = imgui.menu_item("Quit", "KeyBoard E")
+                        if clicked_quit:
+                            sys.exit(0)
+
+                with imgui.begin_menu("Gui", True) as file_menu:
+                    if file_menu.opened:
+
+                        clicked_quit, selected_quit = imgui.menu_item("Info", "System and program information")
+                        if clicked_quit:
+                            self.enable_info = not self.enable_info
+                        
+                        clicked_quit, selected_quit = imgui.menu_item("Objects", "Objects information")
+                        if clicked_quit:
+                            self.enable_objects = not self.enable_objects
+
+                        clicked_quit, selected_quit = imgui.menu_item("Tweak", "View and modify data")
+                        if clicked_quit:
+                            self.enable_tweak = not self.enable_tweak
 
     def render(self):
         imgui.render()
@@ -262,26 +289,36 @@ class GlGlfwImgui(Gui):
                 code()
 
     def object(self, game_object):
+
+        if not self.enable_objects: 
+            return
+
         transform = game_object.get_component(Transform)
         animator = game_object.get_component(Animator)
         sprite_renderer = game_object.get_component(SpriteRenderer)
-        def widget_object():        
-            if transform is not None:
-                if imgui.tree_node("transform"):
-                    self.widget_drag_float_3f("position", transform.position)
-                    self.widget_drag_float_3f("rotation", transform.rotation)
-                    self.widget_drag_float_3f("scale", transform.scale)
-                    imgui.tree_pop()
-            if sprite_renderer is not None:
-                if imgui.tree_node("sprite renderer"):
-                    # imgui.text("path: %s" % sprite_renderer.path)
-                    imgui.tree_pop()
-            if animator is not None:
-                if imgui.tree_node("animator"):
-                    imgui.text("Animation")
-                    imgui.tree_pop()
 
-        self.widget(game_object.name, widget_object)
+        def widget_object():    
+              
+            if imgui.tree_node(game_object.name): 
+                if transform is not None:
+                    if imgui.tree_node("transform"):
+                        self.widget_drag_float_3f("position", transform.position)
+                        self.widget_drag_float_3f("rotation", transform.rotation)
+                        self.widget_drag_float_3f("scale", transform.scale)
+                        imgui.tree_pop()
+                if sprite_renderer is not None:
+                    if imgui.tree_node("sprite renderer"):
+                        # imgui.text("path: %s" % sprite_renderer.path)
+                        imgui.tree_pop()
+                if animator is not None:
+                    if imgui.tree_node("animator"):
+                        imgui.text("Animation")
+                        imgui.tree_pop()
+
+
+                imgui.tree_pop()
+
+        self.widget("Objects", widget_object)
             
     def text(self, id, text="None"):
         def widget_text():
@@ -307,12 +344,14 @@ class GlGlfwImgui(Gui):
             value.z = values[2]
             self.flag = True
 
-
     def set_drag_float_3f(self, id: str, label: str, value) -> bool:            
         self.widget(id, execute_function(self.widget_drag_float_3f, label, value))
-        return self.flag
-    
+        return self.flag    
+
     def info(self):
+        if not self.enable_info: 
+            return
+        
         with imgui.begin("Info"):
 
             io = imgui.get_io()
@@ -340,7 +379,14 @@ class GlGlfwImgui(Gui):
                         
             imgui.end_group()
 
+    def objects(self):
+        if not self.enable_objects: 
+            return
+
     def tweak(self):
+
+        if not self.enable_tweak: 
+            return
 
         from pygraphics.system import System
         from pygraphics.api.camera.orthographic_camera import OrthographicCamera

@@ -3,10 +3,10 @@ from pygraphics.engine.components.sprite_renderer import SpriteRenderer
 from pygraphics.engine.components.user_interface import UserInterface
 from pygraphics.engine.components.program import Program
 
-class Character2D(CoreBehaviour):
+class GameObject2D(CoreBehaviour):
     def __init__(self, path_sprite):
         super().__init__()
-        self.game_object.name = self.game_object.name + " - Character2D"
+        self.game_object.name = self.game_object.name + " - GameObject2D"
         self.game_object.add_component(SpriteRenderer, path_sprite)
         self.game_object.add_component(Program, "sprite2d")
         self.game_object.add_component(UserInterface)

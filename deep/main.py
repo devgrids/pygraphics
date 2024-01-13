@@ -10,8 +10,6 @@ from pygraphics.api.type.gui_type import GuiType
 from pygraphics.graphics_api import GraphicsApi
 from pygraphics.system import System
 
-from pygraphics.engine.components.animator import Animator
-
 def main():
     GraphicsApi.set_type_graphic(RenderType.GL4)
     GraphicsApi.set_type_input(InputType.GLFW)
@@ -19,29 +17,35 @@ def main():
     
     System.init()
 
-    character = System.new_character2d("deep/resources/sprites/broly/base/icon.png")
-    speed = 1.75
+    background = System.new_game_object_2d("deep/resources/sprites/world-hardest/Background.jpg")
+    background.transform.scale = glm.vec3(40.0, 40.0, 1.0)
+
+    player = System.new_game_object_2d("deep/resources/sprites/world-hardest/Player.png")
+    player.transform.position = glm.vec3(-13.0, 9.0, 1.0)
+
+    enemy = System.new_game_object_2d("deep/resources/sprites/world-hardest/Enemy.png")
+
+    speed = 5.0
 
     def loop():
+
         delta_time = System.time_manager.get_delta_time()
         
         if System.input_manager.is_pressed_down('e'):
             System.exit()
         if System.input_manager.is_pressed('a'):
-            character.transform.position.x-=speed*delta_time
+            player.transform.position.x-=speed*delta_time
         if System.input_manager.is_pressed('d'):
-            character.transform.position.x+=speed*delta_time
+            player.transform.position.x+=speed*delta_time
         if System.input_manager.is_pressed('w'):
-            character.transform.position.y+=speed*delta_time
+            player.transform.position.y+=speed*delta_time
         if System.input_manager.is_pressed('s'):
-            character.transform.position.y-=speed*delta_time
+            player.transform.position.y-=speed*delta_time
 
         System.draw_pixel(3,0, glm.vec3(0.0, 1.0, 0.0))
         System.draw_pixel(1,0)
 
-        # System.gui.demo()
-        System.gui.info()
-        System.gui.tweak()
+        
 
     System.loop(loop)
     return 0

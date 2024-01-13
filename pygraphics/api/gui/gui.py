@@ -43,6 +43,10 @@ class Gui(ABC):
         pass
 
     @abstractmethod   
+    def objects(self):
+        pass
+
+    @abstractmethod   
     def tweak(self):
         pass
     
