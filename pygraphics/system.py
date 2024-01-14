@@ -74,9 +74,12 @@ class System:
         System.pixel.render(color)
     
     @staticmethod
-    def new_game_object_2d(path_sprite):
+    def new_game_object_2d(path, size = glm.ivec2(1, 1), offset = glm.vec2(0.0, 0.0)):
         from pygraphics.templates.game_object_2d import GameObject2D
-        object = GameObject2D(path_sprite)
+        object = GameObject2D()
+        object.sprite_renderer.load_texture(path)
+        object.sprite_renderer.set_size(size)
+        object.sprite_renderer.set_offset(offset)
         System.objects.append(object)
         return object
     
@@ -86,11 +89,12 @@ class System:
         for object in System.objects:
                 object.start()
         while not System.render.is_closed() and not System.end:
+            delta_time = System.time_manager.get_delta_time()
             System.time_manager.update()
             System.render.update()
             System.gui.update()
             for object in System.objects:
-                object.update(System.camera)
+                object.update(delta_time, System.camera)
                 object.render()
             code_source()
             System.gui.info()

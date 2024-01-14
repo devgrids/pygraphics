@@ -15,7 +15,7 @@ class Cube2D(CoreBehaviour):
     def start(self):
         self.box2d.start()
 
-    def update(self, camera=None):
+    def update(self, delta_time, camera=None):
         self.box2d.update(self.transform, camera, self.program.to)
 
     def render(self, color=glm.vec3(1.0, 1.0, 1.0)):

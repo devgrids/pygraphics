@@ -3,14 +3,18 @@ sys.path.append('C:\\dev\\deep')
 from pygraphics.config import *
 
 def main(): 
-    player = System.new_game_object_2d("deep/dinosaur/assets/sprites/male/kuro/base/move.png")
-    player.transform.position = glm.vec3(16.0, 13.0, 1.0)
+
+    player = System.new_game_object_2d(
+        "deep/dinosaur/assets/sprites/male/kuro/base/move.png",
+        glm.ivec2(6,1))
+    
+    player.transform.position = glm.vec3(1.0, 2.0, 1.0)
     player.transform.scale = glm.vec3(2.0, 2.0, 1.0)
     System.camera.set_projection_matrix(0, 30, 0, 30)
 
     # player.sprite_renderer.load_texture("deep/dinosaur/assets/sprites/male/kuro/base/dead.png")
 
-    speed = 2.7
+    speed = 3.7
 
     def handle():
         delta_time = System.time_manager.get_delta_time()
@@ -24,10 +28,6 @@ def main():
         if System.input_manager.is_pressed('s'):
             player.transform.position.y-=speed*delta_time
 
-
-        player.animator.next_offset(delta_time)
-
-        System.draw_pixel(0,0)
 
     System.loop(handle)
 

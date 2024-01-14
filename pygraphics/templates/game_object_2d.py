@@ -5,10 +5,10 @@ from pygraphics.engine.components.user_interface import UserInterface
 from pygraphics.engine.components.program import Program
 
 class GameObject2D(CoreBehaviour):
-    def __init__(self, path_sprite):
+    def __init__(self):
         super().__init__()
         self.game_object.name = self.game_object.name + " - GameObject2D"
-        self.game_object.add_component(SpriteRenderer, path_sprite)
+        self.game_object.add_component(SpriteRenderer)
         self.game_object.add_component(Animator)
         self.game_object.add_component(Program, "sprite2d")
         self.game_object.add_component(UserInterface)
@@ -19,10 +19,11 @@ class GameObject2D(CoreBehaviour):
 
     def start(self):
         self.sprite_renderer.start()
-        self.animator.sprite = self.sprite_renderer
+        self.animator.set_sprite(self.sprite_renderer)
        
-    def update(self, camera=None):
+    def update(self, delta_time, camera=None):
         self.sprite_renderer.update(self.transform, camera, self.program.to)
+        self.animator.update(delta_time)
 
     def render(self):
         self.sprite_renderer.render()

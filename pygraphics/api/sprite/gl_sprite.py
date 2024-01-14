@@ -4,8 +4,8 @@ import numpy as np
 import glm
 
 class GLSprite(Sprite):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, size = glm.ivec2(1, 1), offset = glm.vec2(0.0, 0.0)):
+        super().__init__(size, offset)
         self.vao = 0
         self.vbo = 0
         self.ebo = 0
