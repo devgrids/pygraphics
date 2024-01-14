@@ -67,7 +67,7 @@ def find_path_bfs(board, n):
 
     board[index(current[0], current[1], n)] = 'B'
 
-def create_maze_2d(n):
+def create(n):
     if n % 2 == 0:
         n += 1
     board = []
@@ -75,9 +75,10 @@ def create_maze_2d(n):
     initialize(board, n)
     generate_maze(board, n, 1, 1)
     find_path_bfs(board, n)
-    draw(board, n)
+    # draw(board, n)
+    return board
 
-if __name__ == "__main__":
-    random.seed()
-    n = 13
-    create_maze_2d(n)
+# if __name__ == "__main__":
+#     random.seed()
+#     n = 13
+#     create_maze_2d(n)

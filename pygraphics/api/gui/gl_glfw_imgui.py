@@ -419,7 +419,12 @@ class GlGlfwImgui(Gui):
                             if imgui.tree_node("Camera"):
                                 camera = System.camera                                
                                 if camera.is_class(OrthographicCamera):
-                                    imgui.text("matrix %.3f " % camera.get_projection_matrix()[0][0])
+                                    imgui.text("frustrum left: %.3f " % camera.left)
+                                    imgui.text("frustrum right: %.3f " % camera.right)
+                                    imgui.text("frustrum bottom: %.3f " % camera.bottom)
+                                    imgui.text("frustrum top: %.3f " % camera.top)
+                                    imgui.text("frustrum z_near: %.3f " % camera.z_near)
+                                    imgui.text("frustrum z_far: %.3f " % camera.z_far)
                                     changed, color = imgui.color_edit3("color", *self.colors)
                                     if changed:
                                         self.colors = color

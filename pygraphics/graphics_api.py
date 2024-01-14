@@ -9,7 +9,7 @@ class GraphicsApi:
 
     selected_graphics_backend = RenderType.GL4
     selected_input_backend = InputType.GLFW
-    selected_gui_backend = GuiType.NONE
+    selected_gui_backend = GuiType.IMGUI
 
     render = None
     input_manager = None

@@ -26,6 +26,9 @@ class Camera(ClassType):
     def set_view_projection_matrix(self, matrix):
         self.view_projection_matrix = matrix
 
+    def compute_projection_matrix(self):
+        pass
+
 
 
     

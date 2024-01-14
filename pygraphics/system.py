@@ -29,8 +29,8 @@ class System:
         System.gui = GraphicsApi.get_new_gui()
         
         System.camera = OrthographicCamera()
-        System.camera.set_projection_matrix(glm.ortho(-20.0, 20.0, -20.0, 20.0, -1.0, 1.0))
-        
+        System.camera.set_projection_matrix(0, GraphicsApi.app_width, 0, GraphicsApi.app_height)
+
         System.render.init()
         System.gui.init()
 
@@ -42,17 +42,26 @@ class System:
         System.time_manager.init()
 
         GraphicsResource.init()
+        System.init_pixel()
+        
+    @staticmethod
+    def load_programs():
+        System.load_projection_programs()
+
+    @staticmethod
+    def load_projection_programs():
+        projection = System.camera.get_projection_matrix()
+
         program = GraphicsResource.load_program("sprite2d")
         program.use()
-        program.set_matrix("u_projection", System.camera.get_projection_matrix())
+        program.set_matrix("u_projection", projection)   
 
-        System.init_pixel()
-       
-    @staticmethod
-    def init_pixel():
         program = GraphicsResource.load_program("cube2d")
         program.use()
-        program.set_matrix("u_projection", System.camera.get_projection_matrix())
+        program.set_matrix("u_projection", projection)   
+   
+    @staticmethod
+    def init_pixel():       
         from pygraphics.templates.cube2d import Cube2D
         System.pixel = Cube2D()
         System.pixel.start()
@@ -73,6 +82,7 @@ class System:
     
     @staticmethod
     def loop(code_source):     
+        System.load_programs()
         for object in System.objects:
                 object.start()
         while not System.render.is_closed() and not System.end:
