@@ -21,25 +21,28 @@ class ForceSystem:
 
     def checkEdges(self, _width, _height):
 
-        # if self.position.x > _width:
-        #     self.position.x = _width;
-        #     self.velocity.x *= -1;
+        if self.position.x > _width:
+            self.position.x = _width;
+            self.velocity.x *= -1;
     
-        # elif self.position.x < 0:
-        #     self.velocity.x *= -1
-        #     self.position.x = 0
+        elif self.position.x < 0:
+            self.velocity.x *= -1
+            self.position.x = 0
 
         if self.position.y > _height:
             self.velocity.y *= -1
             self.position.y = _height
     
-        elif self.position.y < 0:
+        elif self.position.y < 1:
             self.velocity.y *= -1;
-            self.position.y = 0;
+            self.position.y = 1;
 
 def main(): 
 
     cube = System.new_object_2d()
+    cube.transform.position.x = 15
+    cube.transform.scale.x = 30
+
     player = System.new_game_object_2d(
         "deep/dinosaur/assets/sprites/male/kuro/base/move.png",
         glm.ivec2(6,1))
@@ -51,10 +54,10 @@ def main():
 
     # player.sprite_renderer.load_texture("deep/dinosaur/assets/sprites/male/kuro/base/dead.png")
 
-    system = ForceSystem(10, player.transform.position)
+    system = ForceSystem(100, player.transform.position)
 
-    _wind = glm.vec2(0.0, 0.5)
-    _gravity = glm.vec2(0.0, -0.1)
+    _wind = glm.vec2(0.3, 0.2)
+    _gravity = glm.vec2(0.0, -9.81)
 
     speed = 3.7
 
@@ -70,12 +73,12 @@ def main():
         if System.input_manager.is_pressed('s'):
             player.transform.position.y-=speed*delta_time
 
-        if System.input_manager.is_pressed_down('f'):
-            system.applyForce(_gravity);
+        # if System.input_manager.is_pressed_down('f'):
 
-        #     system.applyForce(_wind);
+        system.applyForce(_wind);
+        system.applyForce(_gravity);
         
-        system.update(50,50);
+        system.update(30,30);
     
         player.transform.position.x = system.position.x
         player.transform.position.y = system.position.y
