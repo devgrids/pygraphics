@@ -84,6 +84,13 @@ class System:
         return object
     
     @staticmethod
+    def new_object_2d():
+        from pygraphics.templates.cube2d import Cube2D
+        object = Cube2D()
+        System.objects.append(object)
+        return object
+    
+    @staticmethod
     def loop(code_source):     
         System.load_programs()
         for object in System.objects:
