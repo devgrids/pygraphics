@@ -84,6 +84,12 @@ class GLSLShader(RenderProgram):
     def set_float(self, location, value):
         glUniform1f(glGetUniformLocation(self.program_id, location), value)
 
+    def set_ivec2(self, location, vec):
+        glUniform2iv(glGetUniformLocation(self.program_id, location), 1, glm.value_ptr(vec))
+
+    def set_vec2(self, location, vec):
+        glUniform2fv(glGetUniformLocation(self.program_id, location), 1, glm.value_ptr(vec))
+
     def set_vec3(self, location, vec):
         glUniform3fv(glGetUniformLocation(self.program_id, location), 1, glm.value_ptr(vec))
 

@@ -20,6 +20,12 @@ class RenderProgram:
     def set_float(self, location, value):
         pass
 
+    def set_ivec2(self, location, vec):
+        pass
+
+    def set_vec2(self, location, vec):
+        pass
+
     def set_vec3(self, location, vec):
         pass
 

@@ -1,11 +1,11 @@
 from OpenGL.GL import *
 from pygraphics.api.sprite.sprite import Sprite
-from pygraphics.api.texture.gl_texture import GLTexture
 import numpy as np
 import glm
 
 class GLSprite(Sprite):
     def __init__(self):
+        super().__init__()
         self.vao = 0
         self.vbo = 0
         self.ebo = 0
@@ -48,6 +48,8 @@ class GLSprite(Sprite):
         model = glm.scale(model, glm.vec3(transform.scale.x, transform.scale.y, 1.0))
 
         program.use()
+        program.set_vec2("u_offset", self.offset)
+        program.set_ivec2("u_size", self.size)
         program.set_matrix("u_model", model)
 
     def render(self, texture):    

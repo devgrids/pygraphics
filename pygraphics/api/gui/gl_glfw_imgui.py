@@ -302,13 +302,14 @@ class GlGlfwImgui(Gui):
             if imgui.tree_node(game_object.name): 
                 if transform is not None:
                     if imgui.tree_node("transform"):
-                        self.widget_drag_float_3f("position", transform.position)
-                        self.widget_drag_float_3f("rotation", transform.rotation)
-                        self.widget_drag_float_3f("scale", transform.scale)
+                        self.widget_drag_3f("position", transform.position)
+                        self.widget_drag_3f("rotation", transform.rotation)
+                        self.widget_drag_3f("scale", transform.scale)
                         imgui.tree_pop()
                 if sprite_renderer is not None:
                     if imgui.tree_node("sprite renderer"):
-                        # imgui.text("path: %s" % sprite_renderer.path)
+                        self.widget_drag_2f("offset", sprite_renderer.to.offset)
+                        self.widget_drag_2i("size", sprite_renderer.to.size)
                         imgui.tree_pop()
                 if animator is not None:
                     if imgui.tree_node("animator"):
@@ -332,7 +333,36 @@ class GlGlfwImgui(Gui):
         self.widget(id, widget_button)
         return self.flag
 
-    def widget_drag_float_3f(self, label: str, value):
+    def widget_drag_2i(self, label: str, value):
+        changed, values = imgui.drag_float2(label, value.x, value.y,
+                                                change_speed=1,
+                                                min_value=0, 
+                                                max_value=100)
+        if changed:
+            value.x = values[0]
+            value.y = values[1]
+            self.flag = True
+
+    def set_drag_2i(self, id: str, label: str, value) -> bool:            
+        self.widget(id, execute_function(self.widget_drag_2i, label, value))
+        return self.flag   
+
+    def widget_drag_2f(self, label: str, value):
+        changed, values = imgui.drag_float2(label, value.x, value.y,
+                                                change_speed=0.1,
+                                                min_value=-1000.0, 
+                                                max_value=1000.0, 
+                                                format="%.3f")
+        if changed:
+            value.x = values[0]
+            value.y = values[1]
+            self.flag = True
+
+    def set_drag_2f(self, id: str, label: str, value) -> bool:            
+        self.widget(id, execute_function(self.widget_drag_2f, label, value))
+        return self.flag    
+
+    def widget_drag_3f(self, label: str, value):
         changed, values = imgui.drag_float3(label, value.x, value.y, value.z, 
                                                 change_speed=0.1,
                                                 min_value=-1000.0, 
@@ -345,7 +375,7 @@ class GlGlfwImgui(Gui):
             self.flag = True
 
     def set_drag_float_3f(self, id: str, label: str, value) -> bool:            
-        self.widget(id, execute_function(self.widget_drag_float_3f, label, value))
+        self.widget(id, execute_function(self.widget_drag_3f, label, value))
         return self.flag    
 
     def info(self):
