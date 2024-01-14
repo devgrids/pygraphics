@@ -8,6 +8,8 @@ def main():
     player.transform.scale = glm.vec3(2.0, 2.0, 1.0)
     System.camera.set_projection_matrix(0, 30, 0, 30)
 
+    # player.sprite_renderer.load_texture("deep/dinosaur/assets/sprites/male/kuro/base/dead.png")
+
     speed = 2.7
 
     def handle():
@@ -21,6 +23,9 @@ def main():
             player.transform.position.y+=speed*delta_time
         if System.input_manager.is_pressed('s'):
             player.transform.position.y-=speed*delta_time
+
+
+        player.animator.next_offset(delta_time)
 
         System.draw_pixel(0,0)
 
