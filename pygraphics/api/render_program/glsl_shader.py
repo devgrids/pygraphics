@@ -38,17 +38,15 @@ class GLSLShader(RenderProgram):
 
         glLinkProgram(self.program_id)
 
-        # Verificación del enlace del programa
         link_status = glGetProgramiv(self.program_id, GL_LINK_STATUS)
         if not link_status:
-            # Obtener y mostrar el log de errores
             info_log = glGetProgramInfoLog(self.program_id)
             print(f"Error en la vinculación del programa: {info_log}")
 
         for shader_type, shader_id in self.programs.items():
             glDeleteShader(shader_id)
 
-        self.use()  # Ahora usamos el programa después de enlazarlo
+        self.use() 
 
     
     def get_shader_to_enum(self, type):
@@ -68,10 +66,8 @@ class GLSLShader(RenderProgram):
             glShaderSource(self.programs[shader_type], code)
             glCompileShader(self.programs[shader_type])
 
-            # Verificación del estado de la compilación
             compile_status = glGetShaderiv(self.programs[shader_type], GL_COMPILE_STATUS)
             if not compile_status:
-                # Obtener y mostrar el log de errores
                 info_log = glGetShaderInfoLog(self.programs[shader_type])
                 print(f"Error en la compilación del shader {shader_type}: {info_log}")
 
