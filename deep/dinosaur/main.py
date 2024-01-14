@@ -37,20 +37,36 @@ class ForceSystem:
             self.velocity.y *= 0;
             self.position.y = 1.5;
 
+    def checkCollision(self, me, other):
+        # Asume que 'other' tiene atributos x, y, width, height
+        # print(other)
+
+        size_x = 1.5
+        size_y = 1.5
+
+        if (me.x+size_x >other.x and 
+            other.x> me.x-size_x and 
+            me.y+size_y >other.y and
+            other.y> me.y-size_y):
+            return True
+        return False
+
 def main(): 
 
     System.camera.set_projection_matrix(0, 30, 0, 30)
 
-    cube = System.new_object_2d()
-    cube.transform.position.x = 15
-    cube.transform.scale.x = 30
+    # cube = System.new_object_2d()
+    # cube.transform.position.x = 15
+    # cube.transform.scale.x = 30
 
     player = System.new_object_2d()
     player.box2d.color = glm.vec3(0.0, 1.0, 0.0)
     
     player.transform.position = glm.vec3(5.0, 25.0, 1.0)
     player.transform.scale = glm.vec3(2.0, 2.0, 1.0)
-    
+
+    cactus = System.new_object_2d()
+    cactus.transform.position = glm.vec3(10.0, 25.0, 1.0)
 
 
     system = ForceSystem(100, player.transform.position)
@@ -63,24 +79,29 @@ def main():
     def handle():
         delta_time = System.time_manager.get_delta_time()
 
-        # if System.input_manager.is_pressed('a'):
-        #     player.transform.position.x-=speed*delta_time
-        # if System.input_manager.is_pressed('d'):
-        #     player.transform.position.x+=speed*delta_time
-        # if System.input_manager.is_pressed('w'):
-        #     player.transform.position.y+=speed*delta_time
-        # if System.input_manager.is_pressed('s'):
-        #     player.transform.position.y-=speed*delta_time
+        if System.input_manager.is_pressed('a'):
+            player.transform.position.x-=speed*delta_time
+        if System.input_manager.is_pressed('d'):
+            player.transform.position.x+=speed*delta_time
+        if System.input_manager.is_pressed('w'):
+            player.transform.position.y+=speed*delta_time
+        if System.input_manager.is_pressed('s'):
+            player.transform.position.y-=speed*delta_time
 
         if System.input_manager.is_button_mouse_pressed_down(True):
             system.applyForce(_wind);
 
-        system.applyForce(_gravity);
+        # system.applyForce(_gravity);
         
-        system.update(30,30);
+        # system.update(30,30);
     
-        player.transform.position.x = system.position.x
-        player.transform.position.y = system.position.y
+        # player.transform.position.x = system.position.x
+        # player.transform.position.y = system.position.y
+
+        # cactus.transform.position.x-=delta_time*2
+
+        if system.checkCollision(player.transform.position,cactus.transform.position):
+            print("¡Colisión detectada!")
 
     System.loop(handle)
 
