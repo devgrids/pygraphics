@@ -16,7 +16,7 @@ class GL4Render(Render):
         glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
         glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
         glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, GL_TRUE)
-        self.window = glfw.create_window(self.width, self.height, "pygraphics", None, None)
+        self.window = glfw.create_window(self.width, self.height, "Deep", None, None)
         if not self.window:
             glfw.terminate()
             return

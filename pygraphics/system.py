@@ -71,7 +71,8 @@ class System:
         System.pixel.transform.position.x = x
         System.pixel.transform.position.y = y
         System.pixel.update(System.camera)
-        System.pixel.render(color)
+        System.pixel.box2d.color = color
+        System.pixel.render()
     
     @staticmethod
     def new_game_object_2d(path, size = glm.ivec2(1, 1), offset = glm.vec2(0.0, 0.0)):

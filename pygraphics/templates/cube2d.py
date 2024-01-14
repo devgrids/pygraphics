@@ -21,8 +21,8 @@ class Cube2D(CoreBehaviour):
     def update(self, delta_time, camera=None):
         self.box2d.update(self.transform, camera, self.program.to)
 
-    def render(self, color=glm.vec3(1.0, 1.0, 1.0)):
-        self.box2d.render(color, self.program.to)
+    def render(self):
+        self.box2d.render(self.program.to)
         self.user_interface.to.object(self.game_object)
 
             

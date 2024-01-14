@@ -35,7 +35,7 @@ active = {
     "table": False,
 }
 path_to_font = None  # "path/to/font.ttf"
-# path_to_font = "pygraphics/resources/fonts/norwester.otf"
+path_to_font = "pygraphics/resources/fonts/norwester.otf"
 opened_state = True
 
 class GlGlfwImgui(Gui):
@@ -57,7 +57,7 @@ class GlGlfwImgui(Gui):
     def init(self):
         imgui.create_context()
         io = imgui.get_io()
-        self.font = io.fonts.add_font_from_file_ttf(path_to_font, 30) if path_to_font is not None else None
+        self.font = io.fonts.add_font_from_file_ttf(path_to_font, 20) if path_to_font is not None else None
 
     def update(self):
         imgui.new_frame()
