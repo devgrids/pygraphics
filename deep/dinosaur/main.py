@@ -2,6 +2,7 @@ import sys
 sys.path.append('C:\\dev\\deep')
 from pygraphics.config import *
 
+
 class ForceSystem:
     def __init__(self, mass, position):
         self.position = glm.vec2(position.x, position.y)
@@ -51,6 +52,12 @@ class ForceSystem:
             return True
         return False
 
+
+
+timer2 = 0.0
+flag = False
+description = "Network Neural"
+
 def main(): 
 
     System.camera.set_projection_matrix(0, 30, 0, 30)
@@ -66,47 +73,86 @@ def main():
     player.transform.scale = glm.vec3(1.0, 2.0, 1.0)
 
     cactus = System.new_object_2d()
-    cactus.transform.position = glm.vec3(10.0, 2.0, 1.0)
+    cactus.transform.position = glm.vec3(50.0, 2.0, 1.0)
     cactus.transform.scale = glm.vec3(1.0, 3.0, 1.0)
 
+    cactus2 = System.new_object_2d()
+    cactus2.transform.position = glm.vec3(35.0, 1.0, 1.0)
+    cactus2.transform.scale = glm.vec3(2.0, 2.0, 1.0)
 
-    system = ForceSystem(100, player.transform.position)
 
-    _wind = glm.vec2(0.0, 150.0)
+    system = ForceSystem(60, player.transform.position)
+
+    _wind = glm.vec2(0.0, 120.0)
     _gravity = glm.vec2(0.0, -9.81)
 
     speed = 3.7
 
+
     def handle():
-        delta_time = System.time_manager.get_delta_time()
-
-        if System.input_manager.is_pressed('a'):
-            player.transform.position.x-=speed*delta_time
-        if System.input_manager.is_pressed('d'):
-            player.transform.position.x+=speed*delta_time
-        if System.input_manager.is_pressed('w'):
-            player.transform.position.y+=speed*delta_time
-        if System.input_manager.is_pressed('s'):
-            player.transform.position.y-=speed*delta_time
-
-        # if System.input_manager.is_button_mouse_pressed_down(True):
-        #     system.applyForce(_wind);
-
-        # system.applyForce(_gravity);
+        global flag
+        global timer2
+        global description
         
-        # system.update(30,30);
+        delta_time = System.time_manager.get_delta_time()
+        # if System.input_manager.is_pressed('a'):
+        #     player.transform.position.x-=speed*delta_time
+        # if System.input_manager.is_pressed('d'):
+        #     player.transform.position.x+=speed*delta_time
+        # if System.input_manager.is_pressed('w'):
+        #     player.transform.position.y+=speed*delta_time
+        # if System.input_manager.is_pressed('s'):
+        #     player.transform.position.y-=speed*delta_time
+
+        timer2+=delta_time 
+
+        if System.input_manager.is_button_mouse_pressed_down(True) and not flag:
+            system.applyForce(_wind);
+            flag=True
+
+        system.applyForce(_gravity);
+        
+        system.update(30,30);
     
-        # player.transform.position.x = system.position.x
-        # player.transform.position.y = system.position.y
+        player.transform.position.x = system.position.x
+        player.transform.position.y = system.position.y
 
-        # cactus.transform.position.x-=delta_time*15
+        sp = 15
 
-        # if cactus.transform.position.x < 1:
-        #     cactus.transform.position.x = 30.0
+        if timer2 > 3:
+            cactus.transform.position.x-=delta_time*sp
+            cactus2.transform.position.x-=delta_time*sp
+
+        if cactus.transform.position.x < 1:
+            s_x=random.randint(1, 2)
+            s_y=random.randint(1, 3)
+            cactus.transform.position.x = random.randint(30, 32)
+            if abs(cactus.transform.position.x-cactus2.transform.position.x) < 5:
+                cactus2.transform.position.x += 25
+            cactus.transform.position.y = random.randint(1, 4)
+            cactus.transform.scale.x = s_x
+            cactus.transform.scale.y = s_y
+
+        if cactus2.transform.position.x < 1:
+            s_x=random.randint(1, 2)
+            s_y=random.randint(1, 3)
+            cactus2.transform.position.x = random.randint(30, 32)
+            if abs(cactus.transform.position.x-cactus2.transform.position.x) < 5:
+                cactus.transform.position.x+= 25
+            cactus2.transform.position.y = random.randint(1, 4)
+            cactus2.transform.scale.x = s_x
+            cactus2.transform.scale.y = s_y
+
+        if player.transform.position.y < 2.5:
+            flag = False
 
         if system.checkCollision(player.transform,cactus.transform):
-            print("¡Perdiste!")
-            # System.exit()
+            description="¡Perdiste!"
+
+        if system.checkCollision(player.transform,cactus2.transform):
+            description="¡Perdiste!"
+            
+        System.gui.text("Test", description)
 
     System.loop(handle)
 
