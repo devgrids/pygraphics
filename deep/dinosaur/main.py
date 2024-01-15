@@ -2,6 +2,20 @@ import sys
 sys.path.append('C:\\dev\\deep')
 from pygraphics.config import *
 
+# Constantes
+GRAVITY = glm.vec2(0.0, -9.81)
+WIND = glm.vec2(0.0, 120.0)
+SPEED = 3.7
+CAMERA_BOUNDS = (0, 30, 0, 30)
+INITIAL_POSITION = glm.vec3(5.0, 5.0, 1.0)
+PLAYER_SCALE = glm.vec3(1.0, 2.0, 1.0)
+CACTUS_MIN_X = 1
+CACTUS_RESET_X_RANGE = (30, 32)
+CACTUS_Y_RANGE = (1, 4)
+CACTUS_SCALE_RANGE = (1, 2)
+TIMER_RESET = 3
+CACTUS_MOVE_SPEED = 15
+
 
 class ForceSystem:
     def __init__(self, mass, position):
@@ -39,9 +53,6 @@ class ForceSystem:
             self.position.y = 1.5;
 
     def checkCollision(self, me, other):
-        # Asume que 'other' tiene atributos x, y, width, height
-        # print(other)
-
         size_x = other.scale.x/2.0 + me.scale.x/2.0
         size_y = other.scale.y/2.0 + me.scale.y/2.0
 
@@ -58,19 +69,20 @@ timer2 = 0.0
 flag = False
 description = "Network Neural"
 
-def main(): 
 
-    System.camera.set_projection_matrix(0, 30, 0, 30)
+def reset_cactus(cactus):
+    s_x = random.randint(*CACTUS_SCALE_RANGE)
+    s_y = random.randint(*CACTUS_SCALE_RANGE)
+    cactus.transform.position.x = random.randint(*CACTUS_RESET_X_RANGE)
+    cactus.transform.position.y = random.randint(*CACTUS_Y_RANGE)
+    cactus.transform.scale.x = s_x
+    cactus.transform.scale.y = s_y
 
-    cube = System.new_object_2d()
-    cube.transform.position.x = 15
-    cube.transform.scale.x = 30
-
+def setup_objects():
     player = System.new_object_2d()
+    player.transform.position = INITIAL_POSITION
+    player.transform.scale = PLAYER_SCALE
     player.box2d.color = glm.vec3(0.0, 1.0, 0.0)
-    
-    player.transform.position = glm.vec3(5.0, 5.0, 1.0)
-    player.transform.scale = glm.vec3(1.0, 2.0, 1.0)
 
     cactus = System.new_object_2d()
     cactus.transform.position = glm.vec3(50.0, 2.0, 1.0)
@@ -80,6 +92,19 @@ def main():
     cactus2.transform.position = glm.vec3(35.0, 1.0, 1.0)
     cactus2.transform.scale = glm.vec3(2.0, 2.0, 1.0)
 
+    cube = System.new_object_2d()
+    cube.transform.position.x = 15
+    cube.transform.scale.x = 30
+
+    return player, cactus, cactus2, cube
+
+def main(): 
+
+    System.camera.set_projection_matrix(*CAMERA_BOUNDS)
+
+    player, cactus, cactus2, cube = setup_objects()
+
+    
 
     system = ForceSystem(60, player.transform.position)
 
@@ -124,24 +149,16 @@ def main():
             cactus2.transform.position.x-=delta_time*sp
 
         if cactus.transform.position.x < 1:
-            s_x=random.randint(1, 2)
-            s_y=random.randint(1, 3)
-            cactus.transform.position.x = random.randint(30, 32)
+           
             if abs(cactus.transform.position.x-cactus2.transform.position.x) < 5:
                 cactus2.transform.position.x += 25
-            cactus.transform.position.y = random.randint(1, 4)
-            cactus.transform.scale.x = s_x
-            cactus.transform.scale.y = s_y
+            reset_cactus(cactus)
 
         if cactus2.transform.position.x < 1:
-            s_x=random.randint(1, 2)
-            s_y=random.randint(1, 3)
-            cactus2.transform.position.x = random.randint(30, 32)
+           
             if abs(cactus.transform.position.x-cactus2.transform.position.x) < 5:
                 cactus.transform.position.x+= 25
-            cactus2.transform.position.y = random.randint(1, 4)
-            cactus2.transform.scale.x = s_x
-            cactus2.transform.scale.y = s_y
+            reset_cactus(cactus2)
 
         if player.transform.position.y < 2.5:
             flag = False
