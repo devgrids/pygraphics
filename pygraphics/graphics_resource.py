@@ -1,5 +1,6 @@
 from pygraphics.api.type.render_type import RenderType
 from pygraphics.api.type.input_type import InputType
+from pygraphics.api.type.texture_type import TextureType
 
 class GraphicsResource:
 
@@ -73,15 +74,20 @@ class GraphicsResource:
         
     @staticmethod
     def create_texture_instance():     
+        from pygraphics.api.texture.opencv_texture import CV2Texture
         from pygraphics.api.texture.gl_texture import GLTexture
         from pygraphics.graphics_api import GraphicsApi
 
         type_graphic = GraphicsApi.get_type_graphic()
+        type_texture = GraphicsApi.get_type_texture()
         
         if type_graphic == RenderType.GL1:
             return None
         elif type_graphic == RenderType.GL4:
-            return GLTexture()
+            if type_texture == TextureType.CV2:
+                return CV2Texture()
+            elif type_texture == TextureType.PILLOW:
+                return GLTexture()
         else:
             return None
 

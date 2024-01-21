@@ -1,6 +1,7 @@
 from pygraphics.api.type.render_type import RenderType
 from pygraphics.api.type.input_type import InputType
 from pygraphics.api.type.gui_type import GuiType
+from pygraphics.api.type.texture_type import TextureType
 
 class GraphicsApi:
     
@@ -10,6 +11,7 @@ class GraphicsApi:
     selected_graphics_backend = RenderType.GL4
     selected_input_backend = InputType.GLFW
     selected_gui_backend = GuiType.IMGUI
+    selected_texture_backend = TextureType.CV2
 
     render = None
     input_manager = None
@@ -97,6 +99,10 @@ class GraphicsApi:
         GraphicsApi.selected_gui_backend = type_gui
 
     @staticmethod
+    def set_type_texture(type_texture):
+        GraphicsApi.selected_texture_backend = type_texture
+
+    @staticmethod
     def get_type_graphic():
         return GraphicsApi.selected_graphics_backend
     
@@ -107,6 +113,10 @@ class GraphicsApi:
     @staticmethod
     def get_type_gui():
         return GraphicsApi.selected_gui_backend
+    
+    @staticmethod
+    def get_type_texture():
+        return GraphicsApi.selected_texture_backend
 
     @staticmethod
     def get_render():

@@ -34,7 +34,7 @@ active = {
     "popup context void": False,
     "table": False,
 }
-path_to_font = None  # "path/to/font.ttf"
+# path_to_font = None  # "path/to/font.ttf"
 path_to_font = "pygraphics/resources/fonts/norwester.otf"
 opened_state = True
 

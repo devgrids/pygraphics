@@ -1,36 +1,31 @@
 import sys
 sys.path.append('C:\\dev\\deep')
-
 from pygraphics.config import *
+import cv2
 
-def main():
+CAMERA_BOUNDS = (0, 30, 0, 30)
 
-    background = System.new_game_object_2d("deep/resources/sprites/world-hardest/Background.jpg")
-    background.transform.scale = glm.vec3(40.0, 40.0, 1.0)
+def main(): 
+    System.camera.set_projection_matrix(*CAMERA_BOUNDS)
 
-    player = System.new_game_object_2d("deep/resources/sprites/world-hardest/Player.png")
-    player.transform.position = glm.vec3(-13.0, 9.0, 1.0)
+    obj = System.new_game_object_2d("deep/assets/chizu.jfif")
+    obj.transform.position = glm.vec3(15, 15, 0)
+    obj.transform.scale = glm.vec3(20, 20, 0)
 
-    enemy = System.new_game_object_2d("deep/resources/sprites/world-hardest/Enemy.png")
+    data  = obj.sprite_renderer.texture.get_data()
+    hsv = cv2.cvtColor(data, cv2.COLOR_BGR2HSV) 
+    mask = cv2.inRange(hsv, (15,0,0), (30,255,255))
+    cnts, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)[-2:]
+    for contour in cnts:
+        cv2.drawContours(data, contour, -1, (0, 255, 0), 2)  
 
-    speed = 5.0
+    obj.sprite_renderer.texture.load_data(data)
 
-    def loop():
-
+    def handle():
         delta_time = System.time_manager.get_delta_time()
-        
-        if System.input_manager.is_pressed('a'):
-            player.transform.position.x-=speed*delta_time
-        if System.input_manager.is_pressed('d'):
-            player.transform.position.x+=speed*delta_time
-        if System.input_manager.is_pressed('w'):
-            player.transform.position.y+=speed*delta_time
-        if System.input_manager.is_pressed('s'):
-            player.transform.position.y-=speed*delta_time
+        System.gui.text("Test", "Yordy Leonidas MV")
 
-
-    System.loop(loop)
-    return 0
+    System.loop(handle)
 
 if __name__ == "__main__":
     main()
