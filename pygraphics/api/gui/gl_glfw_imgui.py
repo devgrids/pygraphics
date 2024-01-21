@@ -67,7 +67,7 @@ class GlGlfwImgui(Gui):
             if main_menu_bar.opened:
                 with imgui.begin_menu("File", True) as file_menu:
                     if file_menu.opened:
-                        clicked_quit, selected_quit = imgui.menu_item("Quit", "KeyBoard E")
+                        clicked_quit, selected_quit = imgui.menu_item("Quit", "Program Finished")
                         if clicked_quit:
                             sys.exit(0)
 

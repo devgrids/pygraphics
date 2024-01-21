@@ -5,7 +5,7 @@ class GameObject(Object):
     __id = 1
 
     def __init__(self):
-        self.name = "GameObject " + str(GameObject.__id)
+        self.name = "Object " + str(GameObject.__id)
         self.components = []
         GameObject.__id+=1
 

@@ -11,11 +11,11 @@ from PIL import Image
 def main(): 
     System.camera.set_projection_matrix(*CAMERA_BOUNDS)
 
-    obj2 = System.new_game_object_2d("deep/assets/chizu.jfif")
-    obj2.transform.position = glm.vec3(5, 5, 0)
-    obj2.transform.scale = glm.vec3(10, 10, 0)
+    obj2 = System.new_object_2d()
+    obj2.transform.position = glm.vec3(2, 10, 0)
+    obj2.transform.scale = glm.vec3(5, 5, 1)
 
-    obj = System.new_game_object_2d("deep/assets/rusa.jpg")
+    obj = System.new_object_2d("deep/assets/rusa.jpg")
     obj.transform.position = glm.vec3(15, 15, 0)
     obj.transform.scale = glm.vec3(20, 20, 0)
 
@@ -40,22 +40,7 @@ def main():
         h, w, _ = frame.shape
 
         obj.sprite_renderer.texture.load_texture(w,h,frame)
-        
 
-        delta_time = System.time_manager.get_delta_time()
-
-        if System.input_manager.is_pressed('f'):
-            if captura.isOpened():
-                ret, imagen = captura.read()
-                if ret == True:
-                    cv2.imshow('video', imagen)
-        
-        
-                # obj.sprite_renderer.texture.load_data(imagen)
-
-        
-        # capture_client.switch_channel()
-        # capture_client.switch_channel()
 
     System.loop(handle)
     captura.release()

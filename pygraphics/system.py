@@ -75,9 +75,9 @@ class System:
         System.pixel.render()
     
     @staticmethod
-    def new_game_object_2d(path, size = glm.ivec2(1, 1), offset = glm.vec2(0.0, 0.0)):
-        from pygraphics.templates.game_object_2d import GameObject2D
-        object = GameObject2D()
+    def new_object_2d(path="", size = glm.ivec2(1, 1), offset = glm.vec2(0.0, 0.0)):
+        from pygraphics.templates.object_2d import Object2D
+        object = Object2D()
         object.sprite_renderer.load_texture(path)
         object.sprite_renderer.set_size(size)
         object.sprite_renderer.set_offset(offset)
@@ -85,7 +85,7 @@ class System:
         return object
     
     @staticmethod
-    def new_object_2d():
+    def new_cube_2d():
         from pygraphics.templates.cube2d import Cube2D
         object = Cube2D()
         System.objects.append(object)

@@ -17,7 +17,10 @@ class SpriteRenderer(Component):
         self.to.render(self.texture)
 
     def load_texture(self, path):
-        self.texture = GraphicsResource.load_texture(path)
+        if path == "":
+            self.texture = GraphicsResource.load_texture("pygraphics/resources/images/default.jpg")
+        else:
+            self.texture = GraphicsResource.load_texture(path)
 
     def set_size(self, size):
         self.to.size = size
