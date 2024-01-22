@@ -73,6 +73,13 @@ class System:
         System.pixel.update(System.camera)
         System.pixel.box2d.color = color
         System.pixel.render()
+
+    @staticmethod
+    def new_object():
+        from pygraphics.templates.object import Object
+        object = Object()
+        System.objects.append(object)
+        return object
     
     @staticmethod
     def new_object_2d(path="", size = glm.ivec2(1, 1), offset = glm.vec2(0.0, 0.0)):

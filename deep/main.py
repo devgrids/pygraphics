@@ -7,7 +7,6 @@ CAMERA_BOUNDS = (0, 30, 0, 30)
 
 captura = cv2.VideoCapture('deep/assets/sex.mp4')
 
-from PIL import Image
 def main(): 
     System.camera.set_projection_matrix(*CAMERA_BOUNDS)
 
