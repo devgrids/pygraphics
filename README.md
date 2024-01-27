@@ -31,10 +31,12 @@ pip install imgui
 pip install spdlog
 pip install PyGLM
 pip install numpy
-pip install torch
 pip install pandas
 pip install matplotlib
 pip install opencv-python
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip install pytorch_lightning
+pip install jupyterthemes
 
 NOT RECOMEND: pip install git+https://github.com/swistakm/pyimgui.git
 pip install git+https://github.com/swistakm/pyimgui.git@<tag-branch-or-commit>
