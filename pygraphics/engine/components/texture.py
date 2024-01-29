@@ -1,5 +1,4 @@
 from pygraphics.engine.components.component import Component
-from pygraphics.graphics_resource import GraphicsResource
 from pygraphics.api.texture.opencv_texture import CV2Texture
 
 class Texture(Component):

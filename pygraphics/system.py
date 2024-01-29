@@ -99,9 +99,9 @@ class System:
         return object
     
     @staticmethod
-    def new_image_2d():
+    def new_image_2d(path):
         from pygraphics.templates.image2d import Image2D
-        object = Image2D()
+        object = Image2D(path)
         System.objects.append(object)
         return object
     
