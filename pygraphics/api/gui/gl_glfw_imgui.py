@@ -10,6 +10,7 @@ from OpenGL.GL import *
 from OpenGL.GL.shaders import compileProgram, compileShader
 import imgui
 from imgui.integrations.glfw import GlfwRenderer
+from tkinter import Tk, filedialog
 
 from pygraphics.helpers.functions import execute_function
 
@@ -50,6 +51,8 @@ class GlGlfwImgui(Gui):
         self.enable_info = False
         self.enable_tweak = False
         self.enable_objects = False
+        self.file_path = None
+        self.show_dialog = False
 
     # def __del__(self):
     #     self.clear()
@@ -377,6 +380,29 @@ class GlGlfwImgui(Gui):
     def set_drag_float_3f(self, id: str, label: str, value) -> bool:            
         self.widget(id, execute_function(self.widget_drag_3f, label, value))
         return self.flag    
+    
+    def set_file(self, id, label) -> str:
+        with imgui.begin(id):
+            imgui.text(label)
+            imgui.same_line()
+            if imgui.button("Open"):
+                self.show_dialog = True
+            if self.show_dialog:
+                root = Tk()
+                root.withdraw()
+                file_path = filedialog.askopenfilename(title=label, filetypes=[("Imágenes", "*.png;*.jpg;*.jpeg;*.bmp")])
+                if file_path:
+                    self.file_path = file_path
+                self.show_dialog = False
+        return self.file_path
+    
+    def widget_image(self, texture, width, height):
+        imgui.image(texture, width=width, height=height)
+    
+    def set_image(self, id, texture, width, height):
+        with imgui.begin(id):
+            imgui.image(texture, width=width, height=height)
+        #self.widget(id, execute_function(self.widget_image, texture, width, height))
 
     def info(self):
         if not self.enable_info: 
@@ -421,7 +447,6 @@ class GlGlfwImgui(Gui):
         from pygraphics.system import System
         from pygraphics.api.camera.orthographic_camera import OrthographicCamera
         from pygraphics.api.camera.camera import Camera     
-
         # from pygraphics.api.camera import orthographic_camera, camera
 
         with imgui.begin("Tweak"):

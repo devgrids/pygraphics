@@ -99,6 +99,13 @@ class System:
         return object
     
     @staticmethod
+    def new_image_2d():
+        from pygraphics.templates.image2d import Image2D
+        object = Image2D()
+        System.objects.append(object)
+        return object
+    
+    @staticmethod
     def loop(code_source):     
         System.load_programs()
         for object in System.objects:

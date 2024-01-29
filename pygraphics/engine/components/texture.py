@@ -1,10 +1,11 @@
 from pygraphics.engine.components.component import Component
 from pygraphics.graphics_resource import GraphicsResource
+from pygraphics.api.texture.opencv_texture import CV2Texture
 
 class Texture(Component):
-    def __init__(self, path=None):
+    def __init__(self):
         super().__init__()
-        self.to = GraphicsResource.load_texture(path)
+        self.to = CV2Texture()
     
     def start(self):
         pass
@@ -16,4 +17,4 @@ class Texture(Component):
         pass
 
     def load(self, path):
-        self.to = GraphicsResource.load_texture(path)
+        pass

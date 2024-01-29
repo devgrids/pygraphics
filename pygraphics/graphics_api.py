@@ -11,7 +11,7 @@ class GraphicsApi:
     selected_graphics_backend = RenderType.GL4
     selected_input_backend = InputType.GLFW
     selected_gui_backend = GuiType.IMGUI
-    selected_texture_backend = TextureType.CV2
+    selected_texture_backend = TextureType.PILLOW
 
     render = None
     input_manager = None
