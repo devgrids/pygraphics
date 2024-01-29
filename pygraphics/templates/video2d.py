@@ -16,7 +16,6 @@ class Video2D(CoreBehaviour):
         self.frame = None
 
     def start(self):
-        self.texture.to.load('deep/assets/goku.jpg')
         self.id = self.texture.to.get_id()
         self.width = self.texture.to.width
         self.height = self.texture.to.height
