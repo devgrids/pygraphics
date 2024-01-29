@@ -390,7 +390,7 @@ class GlGlfwImgui(Gui):
             if self.show_dialog:
                 root = Tk()
                 root.withdraw()
-                file_path = filedialog.askopenfilename(title=label, filetypes=[("Imágenes", "*.png;*.jpg;*.jpeg;*.bmp")])
+                file_path = filedialog.askopenfilename(title=label, filetypes=[("Imágenes", "*.jpg;*.jpeg;*.png")])
                 if file_path:
                     self.file_path = file_path
                 self.show_dialog = False

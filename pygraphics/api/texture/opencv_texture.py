@@ -20,6 +20,7 @@ class CV2Texture(Texture):
 
         image = self.data
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        self.height, self.width, _ = image.shape
         # image = cv2.flip(image, 0)
 
         gl.glBindTexture(gl.GL_TEXTURE_2D, self.id)

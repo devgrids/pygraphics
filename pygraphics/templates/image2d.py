@@ -5,7 +5,7 @@ from pygraphics.engine.components.texture import Texture
 class Image2D(CoreBehaviour):
     def __init__(self, path):
         super().__init__()
-        self.game_object.name = self.game_object.name + " - Image 2D"
+        self.game_object.name = self.game_object.name + " - Image2D"
         self.game_object.add_component(UserInterface)
         self.game_object.add_component(Texture)
         self.user_interface = self.game_object.get_component(UserInterface)
@@ -22,7 +22,7 @@ class Image2D(CoreBehaviour):
         pass
 
     def render(self):
-        self.user_interface.to.set_image(self.game_object.name, self.id, self.width/4,self.height/4)
+        self.user_interface.to.set_image(self.game_object.name, self.id, self.width,self.height)
         pass
 
             

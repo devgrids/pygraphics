@@ -83,7 +83,7 @@ class System:
     
     @staticmethod
     def new_object_2d(path="", size = glm.ivec2(1, 1), offset = glm.vec2(0.0, 0.0)):
-        from pygraphics.templates.object_2d import Object2D
+        from pygraphics.templates.object2d import Object2D
         object = Object2D()
         object.sprite_renderer.load_texture(path)
         object.sprite_renderer.set_size(size)
@@ -102,6 +102,20 @@ class System:
     def new_image_2d(path):
         from pygraphics.templates.image2d import Image2D
         object = Image2D(path)
+        System.objects.append(object)
+        return object
+    
+    @staticmethod
+    def new_video_2d(path):
+        from pygraphics.templates.video2d import Video2D
+        object = Video2D(path)
+        System.objects.append(object)
+        return object
+    
+    @staticmethod
+    def new_image_2d_cnn():
+        from pygraphics.templates.image2d_cnn import Image2DCNN
+        object = Image2DCNN()
         System.objects.append(object)
         return object
     
