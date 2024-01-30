@@ -21,13 +21,13 @@ class Video2D(CoreBehaviour):
         self.height = self.texture.to.height
        
     def update(self, delta_time, camera=None):
-        pass
-
-    def render(self): 
         ret, self.frame = self.capture.read()
         if not ret:
             self.capture.set(cv2.CAP_PROP_POS_FRAMES, 0)
             return
         self.texture.to.load_data(self.frame)
+
+    def render(self): 
+        
         self.user_interface.to.set_image(self.game_object.name, self.id, self.texture.to.width/3, self.texture.to.height/3)
         

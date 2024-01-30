@@ -17,6 +17,7 @@ class Image2DCNN(CoreBehaviour):
         self.path = None
         self.path_view = None
         self.load_image = False
+        self.path_model = None
 
     def start(self):
         # self.texture.to.load(self.path)
@@ -26,12 +27,11 @@ class Image2DCNN(CoreBehaviour):
         pass
        
     def update(self, delta_time, camera=None):
-        pass
-
-    def render(self):
         self.path = self.user_interface.to.set_file(self.game_object.name,"Load Image")
+
         if self.path != self.path_view:
             self.load_image = False
+
         if self.path is not None and not self.load_image:
             print(self.path)
             path_split(self.path)
@@ -42,11 +42,16 @@ class Image2DCNN(CoreBehaviour):
             self.load_image = True
             self.path_view = self.path
 
+        if self.user_interface.to.button(self.game_object.name, "Predict"):
+            self.convolutional_neural_network.predict(self.path_view)
+
+    def render(self):
+        self.user_interface.to.convolutional_neural_network()
+
         if self.load_image:
             self.user_interface.to.set_image(self.game_object.name, self.id, 600, 400)
 
-        if self.user_interface.to.button(self.game_object.name, "Predict"):
-            self.convolutional_neural_network.predict(self.path_view)
+        
         
 
             

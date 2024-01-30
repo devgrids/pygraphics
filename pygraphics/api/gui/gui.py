@@ -58,5 +58,10 @@ class Gui(ABC):
     def tweak(self):
         pass
 
+    # ----------- Neural Network --------------------
+    @abstractmethod   
+    def convolutional_neural_network(self):
+        pass
+
     
 

@@ -41,33 +41,26 @@ class ConvolutionalNeuralNetwork(Component):
         import numpy as np
         from PIL import Image
         from torchvision import transforms
-        # Load and preprocess the test image
+
         test_image_path = image_path
         test_image = Image.open(test_image_path)
-        # Modifica la transformación ToTensor para descartar el canal alfa si está presente
+
         test_transform = transforms.Compose([
             transforms.Resize((64, 64)),
             transforms.ToTensor(),
-            lambda x: x[:3, :, :],  # Descartar el canal alfa si existe
+            lambda x: x[:3, :, :],
             transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
         ])
         test_image = test_transform(test_image)
         test_image = test_image.to(self.device)
 
-
-        # Crear una nueva instancia del modelo
         loaded_model = CNN()
-
-        # Cargar los pesos entrenados en el nuevo modelo
         loaded_model.load_state_dict(torch.load('deep/cat_or_dog_predict.pth'))
-
-        # Mover el modelo a GPU si está disponible
         loaded_model.to(self.device)
 
-        # Hacer una predicción con la imagen de prueba
         with torch.no_grad():
             loaded_model.eval()
-            result = loaded_model(test_image.unsqueeze(0))  # Mantén unsqueeze(0) aquí si es necesario
+            result = loaded_model(test_image.unsqueeze(0))
             prediction = 'dog' if result.item() > 0.5 else 'cat'
             print(prediction)
 

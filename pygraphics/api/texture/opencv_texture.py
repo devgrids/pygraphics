@@ -21,17 +21,15 @@ class CV2Texture(Texture):
         image = self.data
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         self.height, self.width, _ = image.shape
-        # image = cv2.flip(image, 0)
 
         gl.glBindTexture(gl.GL_TEXTURE_2D, self.id)
-
         gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_S, gl.GL_REPEAT)
         gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_WRAP_T, gl.GL_REPEAT)
         gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MIN_FILTER, gl.GL_LINEAR)
         gl.glTexParameteri(gl.GL_TEXTURE_2D, gl.GL_TEXTURE_MAG_FILTER, gl.GL_LINEAR)
 
         self.load_texture(self.width, self.height, image)
-        gl.glGenerateMipmap(gl.GL_TEXTURE_2D)
+        # gl.glGenerateMipmap(gl.GL_TEXTURE_2D)
 
     def load_texture(self, width, height, data):
         import OpenGL.GL as gl
