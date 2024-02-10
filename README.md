@@ -26,7 +26,6 @@ Instalar librerias:
 
 pip install PyOpenGL PyOpenGL_accelerate Pillow
 pip install glfw
-#pip install imgui[glfw] || pip install imgui==<version>[glfw]
 pip install imgui
 pip install spdlog
 pip install PyGLM
@@ -40,6 +39,7 @@ pip install jupyterthemes
 pip install --upgrade jupyter ipywidgets
 
 
+#pip install imgui[glfw] || pip install imgui==<version>[glfw]
 NOT RECOMEND: pip install git+https://github.com/swistakm/pyimgui.git
 pip install git+https://github.com/swistakm/pyimgui.git@<tag-branch-or-commit>
 

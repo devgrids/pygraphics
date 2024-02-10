@@ -7,8 +7,7 @@ CAMERA_BOUNDS = (0, 30, 0, 30)
 def main(): 
     System.camera.set_projection_matrix(*CAMERA_BOUNDS)
 
-    # video = System.new_video_2d('deep/assets/mascotas.mp4')
-    image = System.new_image_2d_cnn()
+    video = System.new_video_2d('deep/assets/mascotas.mp4')
 
     obj = System.new_object_2d("deep/assets/goku-black.png")
     obj.transform.position = glm.vec3(15, 15, 0)
