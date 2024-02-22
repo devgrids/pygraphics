@@ -8,5 +8,6 @@ Ejecutar: F5
 
 pip install transformers
 pip install diffusers transformers accelerate scipy safetensors
+pip install pandas
 
 ----------------------------------------------------------------
