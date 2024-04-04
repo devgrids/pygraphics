@@ -120,13 +120,6 @@ class System:
         return object
     
     @staticmethod
-    def new_image_2d_cnn():
-        from pygraphics.templates.image2d_cnn import Image2DCNN
-        object = Image2DCNN()
-        System.objects.append(object)
-        return object
-    
-    @staticmethod
     def loop(code_source):     
         System.load_programs()
         for object in System.objects:
