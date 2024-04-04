@@ -11,6 +11,7 @@ class GLTexture(Texture):
         img = Image.open(path)
         img = img.transpose(Image.FLIP_TOP_BOTTOM)
         img_data = img.convert("RGBA").tobytes()
+        self.path = path
         self.width = img.size[0]
         self.height = img.size[1]
         self.load_data(img_data)

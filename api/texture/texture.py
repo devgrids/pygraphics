@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 class Texture(ABC):
     def __init__(self):
+        self.path = ""
         self.id = 0
         self.data = None
         self.height, self.width = 0, 0

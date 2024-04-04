@@ -35,8 +35,8 @@ active = {
     "popup context void": False,
     "table": False,
 }
-# path_to_font = None  # "path/to/font.ttf"
-path_to_font = "pygraphics/resources/fonts/norwester.otf"
+path_to_font = None  # "path/to/font.ttf"
+# path_to_font = "pygraphics/resources/fonts/norwester.otf"
 opened_state = True
 
 class GlGlfwImgui(Gui):
@@ -493,55 +493,6 @@ class GlGlfwImgui(Gui):
 
             imgui.end_group()
 
-    def convolutional_neural_network(self):
-
-        def widget_object():    
-              
-            if imgui.tree_node("Model"): 
-                
-                if imgui.tree_node("transform"):
-                    imgui.text("Convolutional Neural Network")
-                    imgui.tree_pop()
-                imgui.tree_pop()
-
-            if imgui.tree_node("Train"): 
-                
-                if imgui.tree_node("transform"):
-                    imgui.text("Convolutional Neural Network")
-                    imgui.tree_pop()
-                imgui.tree_pop()
-
-            if imgui.tree_node("Predictions"): 
-
-                # imgui.new_line()
-                imgui.text("Application")
-
-                imgui.text("Load Image")
-                imgui.same_line()
-                if imgui.button("Open"):
-                    root = Tk()
-                    root.withdraw()
-                    filedialog.askopenfilename(title="Image", filetypes=[("Imágenes", "*.pth")])
-
-                if imgui.button("Predict"):
-                    print("Predict")
-                imgui.tree_pop()
-
-        self.widget("Convolutional Neural Network", widget_object)
-
-            
-
-           
-            
-                
-            
-
-
-            
-
-    
-
-        
 
 
 # import imgui
