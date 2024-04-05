@@ -8,7 +8,7 @@ class Texture(ABC):
 
     @abstractmethod
     def load(self, path):
-        pass
+        self.path = path
 
     def load_data(self, data):
         self.data = data
@@ -18,3 +18,9 @@ class Texture(ABC):
      
     def get_data(self):
         return self.data
+    
+    def to_base64(self):
+        import base64
+        with open(self.path, 'rb') as file:
+            bits = file.read()
+        return base64.b64encode(bits).decode('utf-8')

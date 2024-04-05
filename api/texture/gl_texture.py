@@ -5,13 +5,13 @@ class GLTexture(Texture):
         super().__init__()
 
     def load(self, path):
+        super().load(path)
         import OpenGL.GL as gl
         self.id = gl.glGenTextures(1)
         from PIL import Image
         img = Image.open(path)
         img = img.transpose(Image.FLIP_TOP_BOTTOM)
         img_data = img.convert("RGBA").tobytes()
-        self.path = path
         self.width = img.size[0]
         self.height = img.size[1]
         self.load_data(img_data)
