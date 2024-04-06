@@ -1,0 +1,8 @@
+PyOpenGL
+PyOpenGL_accelerate
+Pillow
+glfw
+imgui
+spdlog
+PyGLM
+opencv-python
