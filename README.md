@@ -2,3 +2,6 @@
 
 
 ----------------------------------------------------------------
+
+git tag 0.1 -m "PyGraphics"
+git push --tags origin main
